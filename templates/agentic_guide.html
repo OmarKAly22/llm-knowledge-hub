@@ -4,17 +4,36 @@
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
-    <a href="/" class="inline-flex items-center text-primary hover:text-primary-dark mb-6">
+    <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-6 transition">
         ← Back to Home
     </a>
 
-    <div class="glass rounded-xl p-8">
-        <h1 class="text-4xl font-bold gradient-text mb-6">Agentic AI: Complete Guide</h1>
-        
+    <div class="glass rounded-xl p-8 markdown-content">
         {% if content %}
             {{ content|safe }}
         {% else %}
-            <!-- Similar structure to llm_guide.html -->
+            <h1 class="text-4xl font-bold gradient-text mb-6">Agentic AI Development Guide</h1>
+            <p class="text-xl mb-8">Build autonomous AI agents from scratch</p>
+            
+            <div class="bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 mb-8">
+                <p class="text-yellow-200">
+                    ⚠️ Content not found. Please make sure the <code>docs/guides/agentic-ai-guide.md</code> file exists in your repository.
+                </p>
+            </div>
+
+            <h2 class="text-2xl font-bold mb-4">What You'll Learn:</h2>
+            <ul class="space-y-2 mb-8">
+                <li>🧩 <strong>Core Concepts</strong>: Understanding agentic behavior</li>
+                <li>🏛️ <strong>Architecture Patterns</strong>: ReAct, planning, multi-agent systems</li>
+                <li>⚙️ <strong>Implementation</strong>: Agent loops, tools, and memory</li>
+                <li>🧪 <strong>Testing & Evaluation</strong>: Ensuring agent reliability</li>
+                <li>🛡️ <strong>Safety Controls</strong>: Building safe, controllable agents</li>
+                <li>🎯 <strong>Use Cases</strong>: Research, coding, customer service agents</li>
+            </ul>
+
+            <a href="/agentic-qa" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
+                Browse Agentic AI Q&A →
+            </a>
         {% endif %}
     </div>
 </div>

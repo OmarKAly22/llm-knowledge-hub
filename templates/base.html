@@ -1,104 +1,185 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}LLM & Agentic AI Knowledge Hub{% endblock %}</title>
-    <meta name="description" content="Comprehensive open-source guide for LLM and Agentic AI development">
+    <title>{% block title %}LLM Knowledge Hub{% endblock %}</title>
     
-    <!-- Tailwind CSS via CDN -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Tailwind Config -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            DEFAULT: '#6366f1',
-                            dark: '#4f46e5',
-                        },
-                        secondary: '#8b5cf6',
-                        accent: '#06b6d4',
-                        dark: {
-                            DEFAULT: '#0f172a',
-                            lighter: '#1e293b',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Custom Styles -->
     <style>
+        /* Custom Glass Morphism Styles */
         .glass {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.125);
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
-        .card-hover {
-            transition: all 0.3s ease;
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
         }
         
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+        /* Markdown Content Styling */
+        .markdown-content h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #f7fafc;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .markdown-content h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #e2e8f0;
         }
         
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-in;
+        .markdown-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+        }
+        
+        .markdown-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .markdown-content ul, .markdown-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .markdown-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .markdown-content code {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .markdown-content pre {
+            background: rgba(17, 25, 40, 0.5);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .markdown-content a {
+            color: #667eea;
+            text-decoration: underline;
+        }
+        
+        .markdown-content a:hover {
+            color: #764ba2;
+        }
+        
+        .markdown-content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #a0aec0;
+        }
+        
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .markdown-content th, .markdown-content td {
+            border: 1px solid rgba(255, 255, 255, 0.125);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .markdown-content th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-dark via-dark-lighter to-dark text-gray-100 min-h-screen">
-    
-    <!-- Header -->
-    <header class="glass border-b border-gray-700 sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <a href="/" class="text-2xl font-bold gradient-text">
-                    🤖 LLM Knowledge Hub
-                </a>
-                <a href="https://github.com/yourusername/llm-knowledge-hub" 
-                   target="_blank"
-                   class="flex items-center gap-2 bg-primary hover:bg-primary-dark px-4 py-2 rounded-lg transition-all hover:-translate-y-0.5">
-                    <span>⭐</span>
-                    <span>Star on GitHub</span>
-                </a>
+<body>
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50 mb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold gradient-text">
+                        🤖 LLM Knowledge Hub
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="hover:text-purple-400 transition">Home</a>
+                    <a href="/llm-guide" class="hover:text-purple-400 transition">LLM Guide</a>
+                    <a href="/llm-qa" class="hover:text-purple-400 transition">LLM Q&A</a>
+                    <a href="/agentic-guide" class="hover:text-purple-400 transition">Agentic AI Guide</a>
+                    <a href="/agentic-qa" class="hover:text-purple-400 transition">Agentic AI Q&A</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-    </header>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4 px-4">
+            <a href="/" class="block py-2 hover:text-purple-400">Home</a>
+            <a href="/llm-guide" class="block py-2 hover:text-purple-400">LLM Guide</a>
+            <a href="/llm-qa" class="block py-2 hover:text-purple-400">LLM Q&A</a>
+            <a href="/agentic-guide" class="block py-2 hover:text-purple-400">Agentic AI Guide</a>
+            <a href="/agentic-qa" class="block py-2 hover:text-purple-400">Agentic AI Q&A</a>
+        </div>
+    </nav>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="glass border-t border-gray-700 mt-16">
-        <div class="container mx-auto px-4 py-8 text-center text-gray-400">
-            <p>Built with ❤️ by the AI engineering community</p>
-            <p class="mt-2">Open source • MIT Licensed</p>
-        </div>
+    <footer class="mt-16 py-8 text-center text-gray-400">
+        <p>Built with ❤️ by the AI engineering community</p>
+        <p class="mt-2">Powered by 🐍 Python & 🌶️ Flask</p>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {% block scripts %}{% endblock %}
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
