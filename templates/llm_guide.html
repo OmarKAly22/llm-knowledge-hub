@@ -1,41 +1,60 @@
-{% extends "base.html" %}
-
-{% block title %}LLM Development Guide - LLM Knowledge Hub{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}LLM Development Guide - LLM Knowledge
+Hub{% endblock %} {% block content %}
 <div class="max-w-4xl mx-auto">
-    <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-6 transition">
-        ← Back to Home
-    </a>
+  <a
+    href="/"
+    class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-6 transition"
+  >
+    ← Back to Home
+  </a>
 
-    <div class="glass rounded-xl p-8 markdown-content">
-        {% if content %}
-            {{ content|safe }}
-        {% else %}
-            <h1 class="text-4xl font-bold gradient-text mb-6">LLM Development Guide</h1>
-            <p class="text-xl mb-8">Master the essential pillars of LLM development</p>
-            
-            <div class="bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 mb-8">
-                <p class="text-yellow-200">
-                    ⚠️ Content not found. Please make sure the <code>docs/guides/llm-guide.md</code> file exists in your repository.
-                </p>
-            </div>
+  <div class="glass rounded-xl p-8 markdown-content">
+    {% if content %} {{ content|safe }} {% else %}
+    <h1 class="text-4xl font-bold gradient-text mb-6">LLM Development Guide</h1>
+    <p class="text-xl mb-8">Master the essential pillars of LLM development</p>
 
-            <h2 class="text-2xl font-bold mb-4">What You'll Learn:</h2>
-            <ul class="space-y-2 mb-8">
-                <li>📝 <strong>Prompt Engineering</strong>: Effective communication with LLMs</li>
-                <li>🏗️ <strong>AI Integration Architecture</strong>: Building reliable systems</li>
-                <li>🔍 <strong>RAG</strong>: Retrieval-Augmented Generation implementation</li>
-                <li>🧠 <strong>Context Management</strong>: Handling token limits and memory</li>
-                <li>✅ <strong>Evaluation & Testing</strong>: Ensuring quality</li>
-                <li>🔒 <strong>Security & Safety</strong>: Protecting against vulnerabilities</li>
-                <li>💰 <strong>Cost Optimization</strong>: Making LLMs economically viable</li>
-            </ul>
-
-            <a href="/llm-qa" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
-                Browse LLM Q&A →
-            </a>
-        {% endif %}
+    <div
+      class="bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 mb-8"
+    >
+      <p class="text-yellow-200">
+        ⚠️ Content not found. Please make sure the
+        <code>docs/guides/llm-guide.md</code> file exists in your repository.
+      </p>
     </div>
+
+    <h2 class="text-2xl font-bold mb-4">What You'll Learn:</h2>
+    <ul class="space-y-2 mb-8">
+      <li>
+        📝 <strong>Prompt Engineering</strong>: Effective communication with
+        LLMs
+      </li>
+      <li>
+        🏗️ <strong>AI Integration Architecture</strong>: Building reliable
+        systems
+      </li>
+      <li>
+        🔍 <strong>RAG</strong>: Retrieval-Augmented Generation implementation
+      </li>
+      <li>
+        🧠 <strong>Context Management</strong>: Handling token limits and memory
+      </li>
+      <li>✅ <strong>Evaluation & Testing</strong>: Ensuring quality</li>
+      <li>
+        🔒 <strong>Security & Safety</strong>: Protecting against
+        vulnerabilities
+      </li>
+      <li>
+        💰 <strong>Cost Optimization</strong>: Making LLMs economically viable
+      </li>
+    </ul>
+
+    <a
+      href="/llm-qa"
+      class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+    >
+      Browse LLM Q&A →
+    </a>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

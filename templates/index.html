@@ -1,137 +1,175 @@
-{% extends "base.html" %}
-
-{% block title %}Home - LLM Knowledge Hub{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Home - LLM Knowledge Hub{% endblock
+%} {% block content %}
 <!-- Hero Section -->
 <div class="text-center mb-16">
-    <h1 class="text-5xl md:text-6xl font-bold gradient-text mb-6">
-        LLM & Agentic AI Knowledge Hub
-    </h1>
-    <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-        Your comprehensive, open-source guide to building with Large Language Models and AI Agents
-    </p>
+  <h1 class="text-5xl md:text-6xl font-bold gradient-text mb-6">
+    LLM & Agentic AI Knowledge Hub
+  </h1>
+  <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+    Your comprehensive, open-source guide to building with Large Language Models
+    and AI Agents
+  </p>
 </div>
 
 <!-- Feature Cards -->
 <div class="grid md:grid-cols-2 gap-8 mb-16">
-    <!-- LLM Guide Card -->
-    <div class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-4">📖</div>
-        <h2 class="text-2xl font-bold mb-4">LLM Development Guide</h2>
-        <p class="text-gray-300 mb-6">
-            Master the essential pillars: Prompt Engineering, RAG, Context Management, Evaluation, Security, and Cost Optimization.
-        </p>
-        <a href="/llm-guide" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
-            Read Guide →
-        </a>
-    </div>
+  <!-- LLM Guide Card -->
+  <div
+    class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300"
+  >
+    <div class="text-4xl mb-4">📖</div>
+    <h2 class="text-2xl font-bold mb-4">LLM Development Guide</h2>
+    <p class="text-gray-300 mb-6">
+      Master the essential pillars: Prompt Engineering, RAG, Context Management,
+      Evaluation, Security, and Cost Optimization.
+    </p>
+    <a
+      href="/llm-guide"
+      class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+    >
+      Read Guide →
+    </a>
+  </div>
 
-    <!-- Agentic AI Guide Card -->
-    <div class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-4">🤖</div>
-        <h2 class="text-2xl font-bold mb-4">Agentic AI Guide</h2>
-        <p class="text-gray-300 mb-6">
-            Build autonomous AI agents from scratch: Core Concepts, Architecture Patterns, Implementation, Testing, and Safety Controls.
-        </p>
-        <a href="/agentic-guide" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
-            Read Guide →
-        </a>
-    </div>
+  <!-- Agentic AI Guide Card -->
+  <div
+    class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300"
+  >
+    <div class="text-4xl mb-4">🤖</div>
+    <h2 class="text-2xl font-bold mb-4">Agentic AI Guide</h2>
+    <p class="text-gray-300 mb-6">
+      Build autonomous AI agents from scratch: Core Concepts, Architecture
+      Patterns, Implementation, Testing, and Safety Controls.
+    </p>
+    <a
+      href="/agentic-guide"
+      class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+    >
+      Read Guide →
+    </a>
+  </div>
 
-    <!-- LLM Q&A Card -->
-    <div class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-4">💬</div>
-        <h2 class="text-2xl font-bold mb-4">LLM Q&A Collection</h2>
-        <p class="text-gray-300 mb-6">
-            Quick answers to 50+ common questions about prompting, RAG, security, optimization, and more.
-        </p>
-        <a href="/llm-qa" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
-            Browse Q&A →
-        </a>
-    </div>
+  <!-- LLM Q&A Card -->
+  <div
+    class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300"
+  >
+    <div class="text-4xl mb-4">💬</div>
+    <h2 class="text-2xl font-bold mb-4">LLM Q&A Collection</h2>
+    <p class="text-gray-300 mb-6">
+      Quick answers to 50+ common questions about prompting, RAG, security,
+      optimization, and more.
+    </p>
+    <a
+      href="/llm-qa"
+      class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+    >
+      Browse Q&A →
+    </a>
+  </div>
 
-    <!-- Agentic AI Q&A Card -->
-    <div class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-4">🎯</div>
-        <h2 class="text-2xl font-bold mb-4">Agentic AI Q&A</h2>
-        <p class="text-gray-300 mb-6">
-            Quick answers to 50+ questions about agent architecture, tools, testing, and production deployment.
-        </p>
-        <a href="/agentic-qa" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
-            Browse Q&A →
-        </a>
-    </div>
+  <!-- Agentic AI Q&A Card -->
+  <div
+    class="glass rounded-xl p-8 hover:scale-105 transition-transform duration-300"
+  >
+    <div class="text-4xl mb-4">🎯</div>
+    <h2 class="text-2xl font-bold mb-4">Agentic AI Q&A</h2>
+    <p class="text-gray-300 mb-6">
+      Quick answers to 50+ questions about agent architecture, tools, testing,
+      and production deployment.
+    </p>
+    <a
+      href="/agentic-qa"
+      class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+    >
+      Browse Q&A →
+    </a>
+  </div>
 </div>
 
 <!-- Features Section -->
 <div class="glass rounded-xl p-8 mb-16">
-    <h2 class="text-3xl font-bold mb-8 text-center">Why This Knowledge Hub?</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-            <div class="text-4xl mb-4">🚀</div>
-            <h3 class="text-xl font-semibold mb-2">Practical & Production-Ready</h3>
-            <p class="text-gray-300">Battle-tested strategies and code examples you can use in real projects</p>
-        </div>
-        <div class="text-center">
-            <div class="text-4xl mb-4">📚</div>
-            <h3 class="text-xl font-semibold mb-2">Comprehensive Coverage</h3>
-            <p class="text-gray-300">150+ pages covering everything from basics to advanced topics</p>
-        </div>
-        <div class="text-center">
-            <div class="text-4xl mb-4">🤝</div>
-            <h3 class="text-xl font-semibold mb-2">Community-Driven</h3>
-            <p class="text-gray-300">Open source and constantly updated with latest best practices</p>
-        </div>
+  <h2 class="text-3xl font-bold mb-8 text-center">Why This Knowledge Hub?</h2>
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="text-center">
+      <div class="text-4xl mb-4">🚀</div>
+      <h3 class="text-xl font-semibold mb-2">Practical & Production-Ready</h3>
+      <p class="text-gray-300">
+        Battle-tested strategies and code examples you can use in real projects
+      </p>
     </div>
+    <div class="text-center">
+      <div class="text-4xl mb-4">📚</div>
+      <h3 class="text-xl font-semibold mb-2">Comprehensive Coverage</h3>
+      <p class="text-gray-300">
+        150+ pages covering everything from basics to advanced topics
+      </p>
+    </div>
+    <div class="text-center">
+      <div class="text-4xl mb-4">🤝</div>
+      <h3 class="text-xl font-semibold mb-2">Community-Driven</h3>
+      <p class="text-gray-300">
+        Open source and constantly updated with latest best practices
+      </p>
+    </div>
+  </div>
 </div>
 
 <!-- Who Is This For Section -->
 <div class="glass rounded-xl p-8 mb-16">
-    <h2 class="text-3xl font-bold mb-6 text-center">Who Is This For?</h2>
-    <div class="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-        <div class="flex items-start space-x-3">
-            <span class="text-2xl">👨‍💻</span>
-            <div>
-                <h4 class="font-semibold">Software Engineers</h4>
-                <p class="text-gray-300 text-sm">Building LLM-powered applications</p>
-            </div>
-        </div>
-        <div class="flex items-start space-x-3">
-            <span class="text-2xl">🧪</span>
-            <div>
-                <h4 class="font-semibold">ML Engineers</h4>
-                <p class="text-gray-300 text-sm">Transitioning to LLM/agent development</p>
-            </div>
-        </div>
-        <div class="flex items-start space-x-3">
-            <span class="text-2xl">📊</span>
-            <div>
-                <h4 class="font-semibold">Product Managers</h4>
-                <p class="text-gray-300 text-sm">Understanding AI capabilities</p>
-            </div>
-        </div>
-        <div class="flex items-start space-x-3">
-            <span class="text-2xl">🎓</span>
-            <div>
-                <h4 class="font-semibold">Students & Researchers</h4>
-                <p class="text-gray-300 text-sm">Learning modern AI engineering</p>
-            </div>
-        </div>
+  <h2 class="text-3xl font-bold mb-6 text-center">Who Is This For?</h2>
+  <div class="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+    <div class="flex items-start space-x-3">
+      <span class="text-2xl">👨‍💻</span>
+      <div>
+        <h4 class="font-semibold">Software Engineers</h4>
+        <p class="text-gray-300 text-sm">Building LLM-powered applications</p>
+      </div>
     </div>
+    <div class="flex items-start space-x-3">
+      <span class="text-2xl">🧪</span>
+      <div>
+        <h4 class="font-semibold">ML Engineers</h4>
+        <p class="text-gray-300 text-sm">
+          Transitioning to LLM/agent development
+        </p>
+      </div>
+    </div>
+    <div class="flex items-start space-x-3">
+      <span class="text-2xl">📊</span>
+      <div>
+        <h4 class="font-semibold">Product Managers</h4>
+        <p class="text-gray-300 text-sm">Understanding AI capabilities</p>
+      </div>
+    </div>
+    <div class="flex items-start space-x-3">
+      <span class="text-2xl">🎓</span>
+      <div>
+        <h4 class="font-semibold">Students & Researchers</h4>
+        <p class="text-gray-300 text-sm">Learning modern AI engineering</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- CTA Section -->
 <div class="text-center glass rounded-xl p-12">
-    <h2 class="text-3xl font-bold mb-4">Ready to Start Learning?</h2>
-    <p class="text-xl text-gray-300 mb-8">Choose your path and dive into the world of LLMs and AI Agents</p>
-    <div class="flex flex-wrap justify-center gap-4">
-        <a href="/llm-guide" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition">
-            Start with LLM Guide
-        </a>
-        <a href="/agentic-guide" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition">
-            Start with Agentic AI
-        </a>
-    </div>
+  <h2 class="text-3xl font-bold mb-4">Ready to Start Learning?</h2>
+  <p class="text-xl text-gray-300 mb-8">
+    Choose your path and dive into the world of LLMs and AI Agents
+  </p>
+  <div class="flex flex-wrap justify-center gap-4">
+    <a
+      href="/llm-guide"
+      class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition"
+    >
+      Start with LLM Guide
+    </a>
+    <a
+      href="/agentic-guide"
+      class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition"
+    >
+      Start with Agentic AI
+    </a>
+  </div>
 </div>
 {% endblock %}

@@ -1,68 +1,88 @@
-{% extends "base.html" %}
-
-{% block title %}LLM Q&A - LLM Knowledge Hub{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}LLM Q&A - LLM Knowledge Hub{%
+endblock %} {% block content %}
 <div class="max-w-4xl mx-auto">
-    <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-6 transition">
-        ← Back to Home
-    </a>
+  <a
+    href="/"
+    class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-6 transition"
+  >
+    ← Back to Home
+  </a>
 
-    <div class="glass rounded-xl p-8">
-        <h1 class="text-4xl font-bold gradient-text mb-6">LLM Q&A Collection</h1>
-        <p class="text-xl text-gray-300 mb-8">Quick answers to common questions about LLM development</p>
-        
-        <!-- Search Bar -->
-        <div class="mb-8">
-            <input type="text" 
-                   id="searchInput"
-                   placeholder="🔍 Search questions..."
-                   class="w-full glass border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500">
-        </div>
-        
-        <div class="markdown-content">
-            {% if content %}
-                {{ content|safe }}
-            {% else %}
-                <div class="bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 mb-8">
-                    <p class="text-yellow-200">
-                        ⚠️ Content not found. Please make sure the <code>docs/guides/llm-qa.md</code> file exists in your repository.
-                    </p>
-                </div>
+  <div class="glass rounded-xl p-8">
+    <h1 class="text-4xl font-bold gradient-text mb-6">LLM Q&A Collection</h1>
+    <p class="text-xl text-gray-300 mb-8">
+      Quick answers to common questions about LLM development
+    </p>
 
-                <h2 class="text-2xl font-bold mb-4">Topics Covered:</h2>
-                <ul class="space-y-2 mb-8">
-                    <li>💬 Prompt Engineering questions</li>
-                    <li>🔍 RAG implementation questions</li>
-                    <li>🔒 Security and safety questions</li>
-                    <li>💰 Cost optimization questions</li>
-                    <li>⚡ Performance and scaling questions</li>
-                    <li>🧪 Testing and evaluation questions</li>
-                </ul>
-
-                <a href="/llm-guide" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
-                    Read Full LLM Guide →
-                </a>
-            {% endif %}
-        </div>
+    <!-- Search Bar -->
+    <div class="mb-8">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search questions..."
+        class="w-full glass border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
+      />
     </div>
-</div>
-{% endblock %}
 
-{% block extra_js %}
+    <div class="markdown-content">
+      {% if content %} {{ content|safe }} {% else %}
+      <div
+        class="bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 mb-8"
+      >
+        <p class="text-yellow-200">
+          ⚠️ Content not found. Please make sure the
+          <code>docs/guides/llm-qa.md</code> file exists in your repository.
+        </p>
+      </div>
+
+      <h2 class="text-2xl font-bold mb-4">Topics Covered:</h2>
+      <ul class="space-y-2 mb-8">
+        <li>💬 Prompt Engineering questions</li>
+        <li>🔍 RAG implementation questions</li>
+        <li>🔒 Security and safety questions</li>
+        <li>💰 Cost optimization questions</li>
+        <li>⚡ Performance and scaling questions</li>
+        <li>🧪 Testing and evaluation questions</li>
+      </ul>
+
+      <a
+        href="/llm-guide"
+        class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+      >
+        Read Full LLM Guide →
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
 <script>
-    // Simple search functionality
-    document.getElementById('searchInput').addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const content = document.querySelector('.markdown-content');
-        
-        if (!searchTerm) {
-            // Reset highlights if search is empty
-            return;
-        }
-        
-        // This is a basic implementation
-        // You can enhance this with more sophisticated search
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("searchInput");
+    const contentDiv = document.querySelector(".markdown-content");
+
+    // Store original HTML the first time
+    let originalHTML = contentDiv.innerHTML;
+
+    input.addEventListener("input", (e) => {
+      const searchTerm = e.target.value.trim().toLowerCase();
+
+      // Reset content if search is empty
+      if (!searchTerm) {
+        contentDiv.innerHTML = originalHTML;
+        return;
+      }
+
+      // Restore original HTML each time before highlighting
+      contentDiv.innerHTML = originalHTML;
+
+      // Highlight all matches (case-insensitive)
+      const regex = new RegExp(`(${searchTerm})`, "gi");
+      contentDiv.innerHTML = contentDiv.innerHTML.replace(
+        regex,
+        `<mark class="bg-yellow-400 text-black rounded px-1">$1</mark>`
+      );
     });
+  });
 </script>
 {% endblock %}
