@@ -1,0 +1,18 @@
+# Core Web Framework
+Flask==3.0.0
+Flask-Cors==4.0.0
+
+# Alternative: FastAPI (uncomment if you prefer FastAPI)
+# fastapi==0.109.0
+# uvicorn[standard]==0.27.0
+# jinja2==3.1.3
+
+# Markdown processing
+markdown2==2.4.12
+Pygments==2.17.2
+
+# Development
+python-dotenv==1.0.0
+
+# Deployment
+gunicorn==21.2.0

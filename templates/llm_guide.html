@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}LLM Guide - LLM Knowledge Hub{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Back Navigation -->
+    <a href="/" class="inline-flex items-center text-primary hover:text-primary-dark mb-6">
+        ← Back to Home
+    </a>
+
+    <!-- Content -->
+    <div class="glass rounded-xl p-8 prose prose-invert prose-primary max-w-none">
+        <h1 class="text-4xl font-bold gradient-text mb-6">LLM Era: Essential Guide</h1>
+        
+        {% if content %}
+            {{ content|safe }}
+        {% else %}
+            <div class="space-y-6">
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h2 class="text-2xl font-semibold text-accent mb-3">📝 1. Prompt Engineering</h2>
+                    <p class="text-gray-300">Master the art of communicating with LLMs. Learn system prompts, few-shot learning, chain-of-thought reasoning, temperature control, and prompt templates.</p>
+                </div>
+
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h2 class="text-2xl font-semibold text-accent mb-3">🏗️ 2. AI Integration Architecture</h2>
+                    <p class="text-gray-300">Build reliable systems with LLMs. Implement API integration, error handling, fallback strategies, caching, and streaming.</p>
+                </div>
+
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h2 class="text-2xl font-semibold text-accent mb-3">🔍 3. RAG</h2>
+                    <p class="text-gray-300">Enhance LLM responses with external knowledge. Understand embeddings, vector databases, chunking strategies, and context injection.</p>
+                </div>
+
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h2 class="text-2xl font-semibold text-accent mb-3">🧠 4. Context Management & Memory</h2>
+                    <p class="text-gray-300">Handle token limits and conversation state. Implement sliding windows, summarization, and multi-layered memory systems.</p>
+                </div>
+
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h2 class="text-2xl font-semibold text-accent mb-3">✅ 5. Evaluation & Testing</h2>
+                    <p class="text-gray-300">Test non-deterministic outputs effectively. Use automated metrics, LLM-as-judge, and production monitoring.</p>
+                </div>
+
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h2 class="text-2xl font-semibold text-accent mb-3">🔒 6. Security & Safety</h2>
+                    <p class="text-gray-300">Protect against prompt injection, data leakage, hallucinations, and misuse. Implement content filtering and safety guardrails.</p>
+                </div>
+
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h2 class="text-2xl font-semibold text-accent mb-3">💰 7. Cost & Performance Optimization</h2>
+                    <p class="text-gray-300">Make LLM applications economical. Learn caching strategies, model selection, and latency optimization.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

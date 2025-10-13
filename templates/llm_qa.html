@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}LLM Q&A - LLM Knowledge Hub{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <a href="/" class="inline-flex items-center text-primary hover:text-primary-dark mb-6">
+        ← Back to Home
+    </a>
+
+    <div class="glass rounded-xl p-8">
+        <h1 class="text-4xl font-bold gradient-text mb-6">LLM Q&A</h1>
+        
+        <!-- Search -->
+        <input type="text" 
+               id="searchInput"
+               placeholder="Search questions..."
+               class="w-full glass border border-gray-700 rounded-lg px-4 py-3 mb-8">
+        
+        {% if content %}
+            {{ content|safe }}
+        {% else %}
+            <div class="space-y-4">
+                <div class="qa-item glass rounded-lg p-6 border-l-4 border-primary">
+                    <h3 class="text-xl font-semibold text-accent mb-3">Q: When should I use streaming?</h3>
+                    <p class="text-gray-300">Use streaming for user-facing applications where latency matters.</p>
+                </div>
+                <!-- Add more Q&A items -->
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

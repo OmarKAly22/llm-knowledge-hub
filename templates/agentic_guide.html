@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Agentic AI Guide - LLM Knowledge Hub{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <a href="/" class="inline-flex items-center text-primary hover:text-primary-dark mb-6">
+        ← Back to Home
+    </a>
+
+    <div class="glass rounded-xl p-8">
+        <h1 class="text-4xl font-bold gradient-text mb-6">Agentic AI: Complete Guide</h1>
+        
+        {% if content %}
+            {{ content|safe }}
+        {% else %}
+            <!-- Similar structure to llm_guide.html -->
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

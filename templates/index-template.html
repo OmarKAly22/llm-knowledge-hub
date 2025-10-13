@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="text-center py-16 animate-fade-in">
+    <h1 class="text-5xl font-bold mb-4 gradient-text">
+        LLM & Agentic AI Knowledge Hub
+    </h1>
+    <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+        Your comprehensive guide to building with Large Language Models and AI Agents
+    </p>
+</div>
+
+<!-- Navigation Tabs -->
+<div class="flex flex-wrap gap-4 justify-center mb-8">
+    <a href="/" class="glass px-6 py-3 rounded-lg border border-primary transition-all hover:-translate-y-1">
+        🏠 Home
+    </a>
+    <a href="/llm-guide" class="glass px-6 py-3 rounded-lg border border-gray-700 hover:border-primary transition-all hover:-translate-y-1">
+        📚 LLM Guide
+    </a>
+    <a href="/llm-qa" class="glass px-6 py-3 rounded-lg border border-gray-700 hover:border-primary transition-all hover:-translate-y-1">
+        ❓ LLM Q&A
+    </a>
+    <a href="/agentic-guide" class="glass px-6 py-3 rounded-lg border border-gray-700 hover:border-primary transition-all hover:-translate-y-1">
+        🤖 Agentic AI
+    </a>
+    <a href="/agentic-qa" class="glass px-6 py-3 rounded-lg border border-gray-700 hover:border-primary transition-all hover:-translate-y-1">
+        💬 Agent Q&A
+    </a>
+</div>
+
+<!-- Search Bar -->
+<div class="mb-12">
+    <input type="text" 
+           id="searchInput"
+           placeholder="🔍 Search guides, questions, and topics..."
+           class="w-full glass border border-gray-700 rounded-xl px-6 py-4 text-lg focus:outline-none focus:border-primary transition-colors">
+</div>
+
+<!-- Main Content Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+    <a href="/llm-guide" class="glass rounded-xl p-6 border border-gray-700 card-hover">
+        <h3 class="text-2xl font-bold text-primary mb-3">📚 LLM Era Guide</h3>
+        <p class="text-gray-400">
+            Master the 7 core pillars: Prompt Engineering, AI Integration, RAG, Context Management, Evaluation, Security, and Cost Optimization.
+        </p>
+    </a>
+
+    <a href="/llm-qa" class="glass rounded-xl p-6 border border-gray-700 card-hover">
+        <h3 class="text-2xl font-bold text-primary mb-3">❓ LLM Q&A</h3>
+        <p class="text-gray-400">
+            Rapid-fire answers to your most pressing questions about working with LLMs in production.
+        </p>
+    </a>
+
+    <a href="/agentic-guide" class="glass rounded-xl p-6 border border-gray-700 card-hover">
+        <h3 class="text-2xl font-bold text-primary mb-3">🤖 Agentic AI Guide</h3>
+        <p class="text-gray-400">
+            Deep dive into building autonomous AI agents: architectures, patterns, multi-agent systems, and production best practices.
+        </p>
+    </a>
+
+    <a href="/agentic-qa" class="glass rounded-xl p-6 border border-gray-700 card-hover">
+        <h3 class="text-2xl font-bold text-primary mb-3">💬 Agentic AI Q&A</h3>
+        <p class="text-gray-400">
+            Get quick answers about agent implementation, testing, safety, frameworks, and real-world deployment.
+        </p>
+    </a>
+</div>
+
+<!-- What You'll Learn -->
+<div class="mt-12">
+    <h2 class="text-3xl font-bold mb-6">🎯 What You'll Learn</h2>
+    
+    <div class="space-y-4">
+        <div class="glass rounded-lg p-6 border-l-4 border-primary">
+            <h3 class="text-xl font-semibold text-accent mb-3">For LLM Development</h3>
+            <p class="text-gray-300 leading-relaxed">
+                Prompt engineering techniques, RAG implementation, context window management, evaluation strategies, security best practices, cost optimization, and production deployment.
+            </p>
+        </div>
+
+        <div class="glass rounded-lg p-6 border-l-4 border-primary">
+            <h3 class="text-xl font-semibold text-accent mb-3">For Agentic AI</h3>
+            <p class="text-gray-300 leading-relaxed">
+                Agent architectures (ReAct, planning, reflexion), tool design, multi-agent systems, memory management, testing strategies, safety controls, and framework comparisons.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

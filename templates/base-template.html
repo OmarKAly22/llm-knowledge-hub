@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LLM & Agentic AI Knowledge Hub{% endblock %}</title>
+    <meta name="description" content="Comprehensive open-source guide for LLM and Agentic AI development">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#6366f1',
+                            dark: '#4f46e5',
+                        },
+                        secondary: '#8b5cf6',
+                        accent: '#06b6d4',
+                        dark: {
+                            DEFAULT: '#0f172a',
+                            lighter: '#1e293b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        .glass {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-dark via-dark-lighter to-dark text-gray-100 min-h-screen">
+    
+    <!-- Header -->
+    <header class="glass border-b border-gray-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold gradient-text">
+                    🤖 LLM Knowledge Hub
+                </a>
+                <a href="https://github.com/yourusername/llm-knowledge-hub" 
+                   target="_blank"
+                   class="flex items-center gap-2 bg-primary hover:bg-primary-dark px-4 py-2 rounded-lg transition-all hover:-translate-y-0.5">
+                    <span>⭐</span>
+                    <span>Star on GitHub</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass border-t border-gray-700 mt-16">
+        <div class="container mx-auto px-4 py-8 text-center text-gray-400">
+            <p>Built with ❤️ by the AI engineering community</p>
+            <p class="mt-2">Open source • MIT Licensed</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
