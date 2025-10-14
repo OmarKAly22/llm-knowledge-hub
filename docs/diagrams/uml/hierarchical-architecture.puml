@@ -1,0 +1,72 @@
+@startuml
+!define META #LightBlue
+!define SUB #LightGreen
+!define AGG #LightYellow
+
+title Hierarchical Planning Architecture
+
+actor User
+
+rectangle "Hierarchical Agent System" {
+    
+    component "Meta-Agent\n(Orchestrator)" as meta META
+    
+    rectangle "Task Decomposition" as decomp #WhiteSmoke {
+        component "Subtask 1" as st1
+        component "Subtask 2" as st2
+        component "Subtask 3" as st3
+    }
+    
+    rectangle "Sub-Agents" {
+        component "Sub-Agent 1" as agent1 SUB
+        component "Sub-Agent 2" as agent2 SUB
+        component "Sub-Agent 3" as agent3 SUB
+    }
+    
+    component "Result\nAggregator" as aggregator AGG
+}
+
+User -down-> meta : high-level goal
+meta -down-> decomp : break into\nsubtasks
+decomp -down-> st1
+decomp -down-> st2
+decomp -down-> st3
+
+st1 -down-> agent1 : delegate
+st2 -down-> agent2 : delegate
+st3 -down-> agent3 : delegate
+
+agent1 -down-> aggregator : result 1
+agent2 -down-> aggregator : result 2
+agent3 -down-> aggregator : result 3
+
+aggregator -up-> meta : combined results
+meta -up-> User : final output
+
+note right of meta
+  **Meta-Agent Role**
+  • High-level strategy
+  • Task decomposition
+  • Resource allocation
+  • Quality control
+end note
+
+note right of agent1
+  **Sub-Agent Role**
+  • Specialized expertise
+  • Independent execution
+  • Own tools & memory
+  • Report to meta-agent
+  
+  Can be mini-ReAct agents!
+end note
+
+note bottom of aggregator
+  **Benefits:**
+  • Divide and conquer
+  • Parallel execution
+  • Specialized agents
+  • Scalable architecture
+end note
+
+@enduml

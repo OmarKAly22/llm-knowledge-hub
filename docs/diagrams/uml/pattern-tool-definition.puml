@@ -1,0 +1,142 @@
+@startuml
+!define SCHEMA #LightBlue
+!define IMPL #LightGreen
+!define VALIDATION #LightCoral
+!define ERROR #LightYellow
+
+title Critical Implementation Pattern - Tool Definition
+
+rectangle "Tool Definition Architecture" {
+    
+    component "Tool\nSchema" as schema SCHEMA
+    
+    component "Input\nValidation" as validation VALIDATION
+    
+    component "Tool\nImplementation" as impl IMPL
+    
+    component "Error\nHandling" as error ERROR
+    
+    component "Response\nFormatter" as formatter #Lavender
+    
+    database "Tool\nRegistry" as registry #WhiteSmoke
+}
+
+actor "Agent/LLM" as agent
+cloud "External\nServices" as external
+
+schema -down-> registry : register tool
+agent -down-> registry : discover tools
+registry -down-> validation : tool call request
+
+validation -right-> error : invalid input
+validation -down-> impl : valid input
+
+impl -down-> external : execute
+external -up-> impl : raw result
+
+impl -right-> error : execution error
+impl -down-> formatter : success result
+
+formatter -up-> agent : structured response
+error -up-> agent : error message
+
+note right of schema
+  **Tool Schema Components**
+  
+  Required fields:
+  • name: unique identifier
+  • description: what it does
+  • parameters: input schema
+  • returns: output schema
+  
+  Example:
+  {
+    "name": "search_database",
+    "description": "Search products",
+    "parameters": {
+      "query": "string",
+      "filters": "object",
+      "limit": "integer"
+    }
+  }
+end note
+
+note right of validation
+  **Input Validation**
+  
+  Checks:
+  • Required parameters present
+  • Type correctness
+  • Value constraints
+  • Format validation
+  
+  Examples:
+  • Email format
+  • Positive integers
+  • Enum values
+  • Array length limits
+end note
+
+note right of impl
+  **Implementation Best Practices**
+  
+  • Clear function signature
+  • Type hints
+  • Sensible defaults
+  • Idempotent when possible
+  • Return structured data
+  • Log all calls
+  
+  def search_database(
+      query: str,
+      filters: dict = None,
+      limit: int = 10
+  ) -> list:
+      # Implementation
+end note
+
+note right of error
+  **Error Handling**
+  
+  Handle gracefully:
+  • Network failures
+  • Invalid inputs
+  • API rate limits
+  • Timeouts
+  • Permission errors
+  
+  Return actionable errors:
+  • What went wrong
+  • Why it failed
+  • Suggested fixes
+  • Retry possible?
+end note
+
+note bottom of formatter
+  **Response Formatting**
+  
+  Consistent structure:
+  • Status (success/error)
+  • Data/result
+  • Error message (if any)
+  • Metadata (timing, cost)
+  
+  Example:
+  {
+    "status": "success",
+    "data": [...],
+    "metadata": {
+      "items": 5,
+      "took_ms": 234
+    }
+  }
+  
+  **Key Principles:**
+  • Clear descriptions
+  • Type safety
+  • Error handling
+  • Structured output
+  • Good defaults
+end note
+
+@enduml

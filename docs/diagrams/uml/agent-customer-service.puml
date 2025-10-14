@@ -1,0 +1,153 @@
+@startuml
+!define UNDERSTAND #LightBlue
+!define SEARCH #LightGreen
+!define RESOLVE #LightCoral
+!define ESCALATE #LightYellow
+
+title Common Agent Pattern - Customer Service Agent
+
+actor Customer
+
+rectangle "Customer Service Agent" {
+    
+    component "Issue\nClassifier" as understand UNDERSTAND
+    
+    component "Knowledge Base\nSearch" as search SEARCH
+    
+    component "Account\nLookup" as account #Lavender
+    
+    component "Solution\nGenerator" as resolve RESOLVE
+    
+    component "Escalation\nHandler" as escalate ESCALATE
+    
+    component "Ticket\nManager" as ticket #WhiteSmoke
+}
+
+database "Knowledge\nBase" as kb #WhiteSmoke
+database "Customer\nDatabase" as customerdb #WhiteSmoke
+actor "Human\nAgent" as human
+
+Customer -down-> understand : issue description
+understand -down-> search : classify issue
+understand -down-> account : get customer info
+
+search -down-> kb : query solutions
+kb -up-> search : relevant articles
+
+account -down-> customerdb : lookup
+customerdb -up-> account : customer data
+
+search -down-> resolve : solutions found
+account -down-> resolve : customer context
+
+resolve -right-> Customer : provide solution
+resolve -down-> ticket : create/update
+
+resolve -down-> escalate : complex/unresolved
+escalate -down-> human : escalate ticket
+escalate -down-> ticket : update status
+
+human -up-> Customer : handle escalation
+
+note right of understand
+  **Issue Classification**
+  
+  Identify:
+  • Issue type
+  • Urgency/priority
+  • Customer sentiment
+  • Required expertise
+  
+  Categories:
+  • Technical support
+  • Billing inquiry
+  • Product question
+  • Complaint
+  • Feature request
+  
+  Use: Intent classification
+end note
+
+note right of search
+  **Knowledge Base Search**
+  
+  Sources:
+  • FAQs
+  • Documentation
+  • Past solutions
+  • Best practices
+  • Troubleshooting guides
+  
+  Techniques:
+  • Semantic search
+  • Keyword matching
+  • Vector similarity
+  • Popularity ranking
+end note
+
+note right of account
+  **Account Information**
+  
+  Retrieve:
+  • Customer profile
+  • Order history
+  • Previous tickets
+  • Subscription status
+  • Payment info
+  • Preferences
+  
+  Privacy:
+  • Verify identity
+  • Mask sensitive data
+  • Audit access
+end note
+
+note right of resolve
+  **Solution Generation**
+  
+  Strategy:
+  1. Match to known solutions
+  2. Personalize response
+  3. Provide step-by-step
+  4. Include links/resources
+  5. Follow up actions
+  
+  Tone:
+  • Empathetic
+  • Clear
+  • Professional
+  • Helpful
+end note
+
+note bottom of escalate
+  **Escalation Criteria**
+  
+  Escalate when:
+  • No solution found
+  • Requires human judgment
+  • Policy exception needed
+  • Angry/frustrated customer
+  • Complex technical issue
+  • Legal/compliance matter
+  
+  Include:
+  • Full conversation history
+  • Customer context
+  • Attempted solutions
+  • Urgency level
+  
+  **Use Cases:**
+  • Support automation
+  • FAQ answering
+  • Ticket routing
+  • Order tracking
+  • Issue resolution
+  
+  **Tools:**
+  • Knowledge base
+  • CRM system
+  • Ticketing system
+  • Email/chat APIs
+end note
+
+@enduml

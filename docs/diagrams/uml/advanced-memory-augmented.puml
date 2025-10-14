@@ -1,0 +1,162 @@
+@startuml
+!define EPISODIC #LightBlue
+!define SEMANTIC #LightGreen
+!define PROCEDURAL #LightCoral
+
+title Advanced Pattern - Memory-Augmented Agents
+
+actor User
+
+rectangle "Memory-Augmented Agent" {
+    
+    component "Agent\nCore" as core #LightYellow
+    
+    rectangle "Memory Systems" {
+        database "Episodic\nMemory" as episodic EPISODIC
+        database "Semantic\nMemory" as semantic SEMANTIC
+        database "Procedural\nMemory" as procedural PROCEDURAL
+    }
+    
+    component "Memory\nRetriever" as retriever #Lavender
+    component "Memory\nWriter" as writer #WhiteSmoke
+}
+
+cloud "External\nWorld" as world
+
+User -down-> core : task/query
+core -down-> retriever : need context
+
+retriever -down-> episodic : recall experiences
+retriever -down-> semantic : recall facts
+retriever -down-> procedural : recall strategies
+
+episodic -up-> retriever : past experiences
+semantic -up-> retriever : knowledge
+procedural -up-> retriever : learned patterns
+
+retriever -up-> core : relevant memories
+
+core -down-> world : take action
+world -up-> core : observation
+
+core -down-> writer : store experience
+writer -down-> episodic : new experience
+writer -down-> semantic : extracted knowledge
+writer -down-> procedural : learned strategy
+
+core -up-> User : response
+
+note right of episodic
+  **Episodic Memory**
+  "What happened?"
+  
+  Stores:
+  • Specific past experiences
+  • Timestamped events
+  • Context of interactions
+  • Success/failure cases
+  
+  Example entries:
+  • "2024-10-14: User asked 
+    about Python loops, 
+    provided for/while examples"
+  • "Last week: Failed to solve
+    task X, error was Y"
+  
+  Storage: Vector DB + metadata
+  Retrieval: Similarity search
+end note
+
+note right of semantic
+  **Semantic Memory**
+  "What do I know?"
+  
+  Stores:
+  • General knowledge
+  • Facts & concepts
+  • User preferences
+  • Domain expertise
+  
+  Example entries:
+  • "User prefers Python over JS"
+  • "Company uses AWS"
+  • "Budget limit: $100/month"
+  • "Working hours: 9-5 EST"
+  
+  Storage: Structured DB
+  Retrieval: Query by key/tag
+end note
+
+note right of procedural
+  **Procedural Memory**
+  "How do I do things?"
+  
+  Stores:
+  • Learned strategies
+  • Successful patterns
+  • Problem-solving approaches
+  • Tool usage patterns
+  
+  Example entries:
+  • "For bug fixes: read error,
+    check docs, test fix"
+  • "For research: start broad,
+    narrow down, synthesize"
+  
+  Storage: Strategy database
+  Retrieval: Pattern matching
+end note
+
+note right of retriever
+  **Memory Retrieval**
+  
+  Strategy:
+  1. Analyze current task
+  2. Query relevant memories
+  3. Rank by relevance
+  4. Combine memories
+  5. Add to context
+  
+  Techniques:
+  • Semantic similarity
+  • Recency weighting
+  • Importance scoring
+  • Diversity sampling
+end note
+
+note bottom of writer
+  **Memory Writing**
+  
+  What to store:
+  • Task outcomes
+  • User feedback
+  • Error patterns
+  • Successful strategies
+  • New knowledge
+  
+  When to store:
+  • After task completion
+  • On explicit feedback
+  • Periodically (consolidation)
+  
+  How to store:
+  • Extract key points
+  • Add metadata (time, tags)
+  • Link to related memories
+  • Update existing entries
+  
+  **Benefits:**
+  • Learn from experience
+  • Personalization
+  • Improved over time
+  • Context-aware decisions
+  • Avoid past mistakes
+  
+  **Use Cases:**
+  • Personal assistants
+  • Long-term projects
+  • Adaptive systems
+  • User-specific agents
+end note
+
+@enduml

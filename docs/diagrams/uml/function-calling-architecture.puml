@@ -1,0 +1,68 @@
+@startuml
+!define LLM #LightBlue
+!define SCHEMA #LightGreen
+!define EXECUTOR #LightCoral
+!define RESULT #LightYellow
+
+title Function Calling Architecture
+
+actor User
+database "Tool\nRegistry" as registry
+
+rectangle "Function Calling Agent" {
+    
+    component "LLM Core" as llm LLM
+    
+    component "Function\nSchemas" as schemas SCHEMA
+    
+    component "Function\nExecutor" as executor EXECUTOR
+    
+    component "Result\nProcessor" as processor RESULT
+}
+
+User -down-> llm : query with context
+llm -down-> schemas : analyze available\nfunctions
+schemas -down-> llm : return schemas
+llm -down-> executor : structured\nfunction call\n(JSON)
+executor -down-> registry : execute function
+registry -down-> executor : return data
+executor -up-> processor : process result
+processor -up-> llm : add to context
+llm -up-> User : continue or\nfinal answer
+
+note right of schemas
+  **JSON Schema Definition**
+  {
+    "name": "get_weather",
+    "description": "Get weather",
+    "parameters": {
+      "location": "string",
+      "unit": "enum"
+    }
+  }
+end note
+
+note right of llm
+  **LLM Decides:**
+  • Which function to call
+  • What parameters to use
+  • When task is complete
+  
+  Native support in:
+  • OpenAI GPT-4
+  • Anthropic Claude
+  • Google Gemini
+end note
+
+note bottom of executor
+  **Strengths:**
+  • Structured & reliable
+  • Less verbose than ReAct
+  • API native support
+  
+  **Weaknesses:**
+  • Requires careful design
+  • Multiple rounds for complex tasks
+end note
+
+@enduml

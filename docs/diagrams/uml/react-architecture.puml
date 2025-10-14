@@ -1,0 +1,69 @@
+@startuml
+!define THOUGHT #LightBlue
+!define ACTION #LightCoral
+!define OBSERVATION #LightYellow
+
+title ReAct Architecture - Reasoning + Acting
+
+actor User
+cloud Environment
+
+rectangle "ReAct Agent" {
+    
+    component "Thought\n(Reasoning)" as thought THOUGHT
+    
+    component "Action\n(Tool Execution)" as action ACTION
+    
+    component "Observation\n(Result)" as observation OBSERVATION
+    
+    component "Decision:\nContinue or\nFinal Answer?" as decision #LightGreen
+}
+
+User -down-> thought : provides goal
+thought -down-> action : decides what to do
+action -down-> Environment : executes tool
+Environment -down-> observation : returns result
+observation -right-> decision : evaluate
+decision -up-> thought : continue loop
+decision -up-> User : final answer
+
+note right of thought
+  **Reasoning Step**
+  • Analyze current state
+  • Plan next action
+  • Consider observations
+  
+  Example: "I need to find 
+  the capital of France first"
+end note
+
+note right of action
+  **Action Step**
+  • Execute chosen tool
+  • Call API/function
+  • Perform operation
+  
+  Example: search("capital of France")
+end note
+
+note right of observation
+  **Observation Step**
+  • Receive results
+  • Update context
+  • Note errors/success
+  
+  Example: "Paris is the capital"
+end note
+
+note bottom of decision
+  **Strengths:**
+  • Transparent reasoning
+  • Easy to debug
+  • Works for most tasks
+  
+  **Weaknesses:**
+  • Can be verbose
+  • May overthink simple tasks
+end note
+
+@enduml

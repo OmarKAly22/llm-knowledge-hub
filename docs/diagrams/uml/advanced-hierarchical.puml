@@ -1,0 +1,148 @@
+@startuml
+!define META #LightBlue
+!define SUB #LightGreen
+!define TASK #LightCoral
+
+title Advanced Pattern - Hierarchical Agents
+
+actor User
+
+rectangle "Hierarchical Agent System" {
+    
+    component "Meta-Agent\n(Orchestrator)" as meta META
+    
+    rectangle "Task Layer" {
+        component "Task\nDecomposer" as decompose TASK
+        component "Dependency\nAnalyzer" as depend TASK
+        component "Resource\nAllocator" as allocate TASK
+    }
+    
+    rectangle "Execution Layer" {
+        component "Sub-Agent 1\n(Specialist)" as agent1 SUB
+        component "Sub-Agent 2\n(Specialist)" as agent2 SUB
+        component "Sub-Agent 3\n(Specialist)" as agent3 SUB
+    }
+    
+    component "Result\nAggregator" as aggregator #LightYellow
+    component "Quality\nController" as quality #Lavender
+    
+    database "Shared\nMemory" as memory #WhiteSmoke
+}
+
+User -down-> meta : high-level goal
+meta -down-> decompose : decompose
+decompose -down-> depend : analyze deps
+depend -down-> allocate : assign resources
+
+allocate -down-> agent1 : subtask A
+allocate -down-> agent2 : subtask B
+allocate -down-> agent3 : subtask C
+
+agent1 <-down-> memory : read/write
+agent2 <-down-> memory : read/write
+agent3 <-down-> memory : read/write
+
+agent1 -down-> aggregator : result A
+agent2 -down-> aggregator : result B
+agent3 -down-> aggregator : result C
+
+aggregator -down-> quality : combined result
+quality -right-> meta : validation failed
+quality -up-> User : final output
+
+meta -down-> memory : coordination
+
+note right of meta
+  **Meta-Agent Role**
+  
+  Responsibilities:
+  • Strategic planning
+  • Task decomposition
+  • Agent coordination
+  • Progress monitoring
+  • Quality assurance
+  
+  Decisions:
+  • Which sub-agents to use
+  • How to divide work
+  • When to intervene
+  • Success criteria
+end note
+
+note right of decompose
+  **Task Decomposition**
+  
+  Break down goal into:
+  • Independent subtasks
+  • Sequential steps
+  • Parallel workstreams
+  
+  Example:
+  "Write a business plan"
+  → Research market
+  → Analyze competitors
+  → Financial projections
+  → Write executive summary
+end note
+
+note right of depend
+  **Dependency Analysis**
+  
+  Identify:
+  • Task prerequisites
+  • Data dependencies
+  • Sequential constraints
+  • Parallel opportunities
+  
+  Creates:
+  • Execution DAG
+  • Critical path
+  • Parallel groups
+end note
+
+note right of agent1
+  **Sub-Agent Characteristics**
+  
+  Each sub-agent:
+  • Specialized expertise
+  • Own tools & memory
+  • Independent reasoning
+  • Reports to meta-agent
+  
+  Can be:
+  • Domain experts
+  • Different architectures
+  • ReAct agents
+  • Function callers
+end note
+
+note bottom of quality
+  **Quality Control**
+  
+  Validate:
+  • Completeness
+  • Correctness
+  • Consistency
+  • Coherence
+  
+  Actions on failure:
+  • Request revisions
+  • Retry subtasks
+  • Escalate to meta
+  • Provide feedback
+  
+  **Benefits:**
+  • Scalability
+  • Specialization
+  • Parallel execution
+  • Fault isolation
+  • Clear hierarchy
+  
+  **Use Cases:**
+  • Complex projects
+  • Multi-domain tasks
+  • Large-scale research
+  • Enterprise workflows
+end note
+
+@enduml

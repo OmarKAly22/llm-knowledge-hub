@@ -1,0 +1,146 @@
+@startuml
+!define UNDERSTAND #LightBlue
+!define GENERATE #LightGreen
+!define TEST #LightCoral
+!define DEBUG #LightYellow
+
+title Common Agent Pattern - Code Agent
+
+actor User
+
+rectangle "Code Agent" {
+    
+    component "Requirements\nAnalyzer" as understand UNDERSTAND
+    
+    component "Code\nGenerator" as generate GENERATE
+    
+    component "Test\nRunner" as test TEST
+    
+    component "Error\nAnalyzer" as debug DEBUG
+    
+    component "Code\nFixer" as fix #Lavender
+    
+    database "Code\nRepository" as repo #WhiteSmoke
+}
+
+cloud "Execution\nEnvironment" as env
+
+User -down-> understand : requirements
+understand -down-> generate : specs
+
+generate -down-> repo : initial code
+repo -down-> test : run tests
+
+test -down-> env : execute
+env -up-> test : results
+
+test -right-> User : SUCCESS\n(working code)
+test -down-> debug : FAILED\n(error analysis)
+
+debug -down-> fix : identify issues
+fix -down-> generate : corrections
+generate -down-> repo : updated code
+
+note right of understand
+  **Requirements Analysis**
+  
+  Extract:
+  • Input/output specs
+  • Edge cases
+  • Constraints
+  • Performance needs
+  • Dependencies
+  
+  Clarify:
+  • Ambiguities
+  • Missing details
+  • Assumptions
+end note
+
+note right of generate
+  **Code Generation**
+  
+  Strategy:
+  • Start simple
+  • Modular design
+  • Add comments
+  • Include type hints
+  • Follow conventions
+  
+  Considerations:
+  • Language choice
+  • Libraries available
+  • Best practices
+  • Error handling
+end note
+
+note right of test
+  **Testing Framework**
+  
+  Test types:
+  • Unit tests
+  • Integration tests
+  • Edge cases
+  • Error conditions
+  
+  Tools:
+  • pytest (Python)
+  • Jest (JavaScript)
+  • JUnit (Java)
+  
+  Capture:
+  • Pass/fail status
+  • Error messages
+  • Stack traces
+  • Performance
+end note
+
+note right of debug
+  **Error Analysis**
+  
+  Diagnose:
+  • Syntax errors
+  • Logic errors
+  • Runtime exceptions
+  • Type mismatches
+  • Edge case failures
+  
+  Identify root cause:
+  • What failed?
+  • Why did it fail?
+  • Where in the code?
+  • How to fix?
+end note
+
+note bottom of fix
+  **Code Fixing Strategy**
+  
+  Iterative approach:
+  1. Analyze error message
+  2. Identify faulty code
+  3. Understand root cause
+  4. Generate fix
+  5. Retest
+  
+  Max iterations: 3-5
+  
+  If still failing:
+  • Simplify approach
+  • Ask for clarification
+  • Provide partial solution
+  
+  **Use Cases:**
+  • Script generation
+  • Bug fixing
+  • Code refactoring
+  • API integration
+  • Test writing
+  
+  **Tools:**
+  • Code execution sandbox
+  • Testing frameworks
+  • Documentation search
+  • Package managers
+end note
+
+@enduml

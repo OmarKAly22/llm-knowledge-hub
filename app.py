@@ -1,6 +1,9 @@
 import os
 from flask import Flask, render_template, request, jsonify
 import markdown2
+import base64
+import zlib
+from pathlib import Path
 
 app = Flask(__name__)
 
@@ -28,6 +31,98 @@ def load_markdown(filename):
             )
     return None
 
+
+def plantuml_encode(plantuml_text):
+    """Encode PlantUML text for URL"""
+    zlibbed_str = zlib.compress(plantuml_text.encode('utf-8'))
+    compressed_string = zlibbed_str[2:-4]
+    return base64.urlsafe_b64encode(compressed_string).decode('utf-8')
+
+@app.route('/diagrams')
+def diagrams_index():
+    """Display all available diagrams"""
+    diagrams_dir = Path('docs/diagrams')
+    
+    # Organize diagrams by category
+    categories = {
+        'Agent Anatomy': [],
+        'Agent Architectures': [],
+        'Multi-Agent Systems': [],
+        'Implementation Patterns': [],
+        'Common Patterns': [],
+        'Advanced Patterns': []
+    }
+    
+    # Map filenames to categories
+    category_map = {
+        'agent-anatomy.puml': 'Agent Anatomy',
+        'react-architecture.puml': 'Agent Architectures',
+        'function-calling-architecture.puml': 'Agent Architectures',
+        'planning-architecture.puml': 'Agent Architectures',
+        'hierarchical-architecture.puml': 'Agent Architectures',
+        'reflexion-architecture.puml': 'Agent Architectures',
+        'multiagent-sequential.puml': 'Multi-Agent Systems',
+        'multiagent-parallel.puml': 'Multi-Agent Systems',
+        'multiagent-debate.puml': 'Multi-Agent Systems',
+        'pattern-agent-loop.puml': 'Implementation Patterns',
+        'pattern-tool-definition.puml': 'Implementation Patterns',
+        'pattern-memory-management.puml': 'Implementation Patterns',
+        'pattern-safety-control.puml': 'Implementation Patterns',
+        'agent-research.puml': 'Common Patterns',
+        'agent-code.puml': 'Common Patterns',
+        'agent-data-analysis.puml': 'Common Patterns',
+        'agent-customer-service.puml': 'Common Patterns',
+        'agent-personal-assistant.puml': 'Common Patterns',
+        'advanced-hierarchical.puml': 'Advanced Patterns',
+        'advanced-memory-augmented.puml': 'Advanced Patterns',
+        'advanced-learning.puml': 'Advanced Patterns',
+    }
+    
+    # Read all .puml files
+    if diagrams_dir.exists():
+        for puml_file in diagrams_dir.glob('*.puml'):
+            filename = puml_file.name
+            if filename in category_map:
+                category = category_map[filename]
+                title = filename.replace('.puml', '').replace('-', ' ').title()
+                categories[category].append({
+                    'filename': filename,
+                    'title': title,
+                    'url': f'/diagrams/{filename.replace(".puml", "")}'
+                })
+    
+    return render_template('diagrams_index.html', categories=categories)
+
+@app.route('/diagrams/<diagram_name>')
+def show_diagram(diagram_name):
+    """Display a specific diagram"""
+    puml_file = Path(f'docs/diagrams/{diagram_name}.puml')
+    
+    if not puml_file.exists():
+        return "Diagram not found", 404
+    
+    # Read the PlantUML file
+    with open(puml_file, 'r', encoding='utf-8') as f:
+        puml_content = f.read()
+    
+    # Encode for PlantUML server
+    encoded = plantuml_encode(puml_content)
+    
+    # Generate URLs for different formats
+    plantuml_server = "https://www.plantuml.com/plantuml"
+    diagram_urls = {
+        'svg': f"{plantuml_server}/svg/{encoded}",
+        'png': f"{plantuml_server}/png/{encoded}",
+        'txt': f"{plantuml_server}/txt/{encoded}"
+    }
+    
+    title = diagram_name.replace('-', ' ').title()
+    
+    return render_template('diagram_view.html', 
+                         diagram_name=diagram_name,
+                         title=title,
+                         diagram_urls=diagram_urls,
+                         puml_content=puml_content)
 
 # Routes
 @app.route("/")

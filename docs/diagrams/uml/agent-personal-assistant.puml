@@ -1,0 +1,153 @@
+@startuml
+!define MONITOR #LightBlue
+!define EXTRACT #LightGreen
+!define SCHEDULE #LightCoral
+!define REMIND #LightYellow
+
+title Common Agent Pattern - Personal Assistant Agent
+
+actor User
+
+rectangle "Personal Assistant Agent" {
+    
+    component "Inbox\nMonitor" as monitor MONITOR
+    
+    component "Action Item\nExtractor" as extract EXTRACT
+    
+    component "Calendar\nManager" as schedule SCHEDULE
+    
+    component "Task\nOrganizer" as tasks #Lavender
+    
+    component "Reminder\nService" as remind REMIND
+    
+    component "Summary\nGenerator" as summary #WhiteSmoke
+}
+
+cloud "Email" as email
+cloud "Calendar\nAPI" as calendar
+cloud "Task\nManager" as taskapp
+
+email -down-> monitor : new messages
+monitor -down-> extract : process emails
+
+extract -down-> schedule : meeting requests
+extract -down-> tasks : action items
+extract -down-> remind : deadlines
+
+schedule -down-> calendar : create events
+calendar -up-> schedule : confirmations
+
+tasks -down-> taskapp : add tasks
+taskapp -up-> tasks : task status
+
+remind -up-> User : notifications
+summary -up-> User : daily digest
+
+schedule -down-> summary : upcoming events
+tasks -down-> summary : pending tasks
+extract -down-> summary : important emails
+
+note right of monitor
+  **Inbox Monitoring**
+  
+  Watch for:
+  • New emails
+  • Priority messages
+  • Meeting invites
+  • Action requests
+  • Time-sensitive items
+  
+  Filter:
+  • Spam detection
+  • Importance scoring
+  • Category classification
+  
+  Frequency: Every 5-15 min
+end note
+
+note right of extract
+  **Action Item Extraction**
+  
+  Identify:
+  • Meeting requests
+  • Deadlines
+  • Tasks to complete
+  • Follow-up items
+  • Information requests
+  
+  Extract:
+  • Who (participants)
+  • What (action)
+  • When (due date)
+  • Where (location/link)
+  • Why (context)
+end note
+
+note right of schedule
+  **Calendar Management**
+  
+  Capabilities:
+  • Schedule meetings
+  • Find free slots
+  • Send invites
+  • Handle conflicts
+  • Set reminders
+  • Update events
+  
+  Smart scheduling:
+  • Avoid conflicts
+  • Respect preferences
+  • Buffer between meetings
+  • Travel time
+end note
+
+note right of tasks
+  **Task Organization**
+  
+  Features:
+  • Create tasks
+  • Set priorities
+  • Add due dates
+  • Organize by project
+  • Track completion
+  • Recurring tasks
+  
+  Prioritization:
+  • Urgent + Important
+  • Important only
+  • Urgent only
+  • Neither
+end note
+
+note bottom of summary
+  **Daily Summary**
+  
+  Include:
+  • Today's meetings
+  • Pending tasks
+  • Important emails
+  • Upcoming deadlines
+  • Weather/traffic
+  • News digest
+  
+  Timing:
+  • Morning briefing
+  • End of day recap
+  • Weekly preview
+  
+  **Use Cases:**
+  • Email management
+  • Calendar coordination
+  • Task tracking
+  • Meeting scheduling
+  • Daily briefings
+  
+  **Tools:**
+  • Gmail API
+  • Google Calendar
+  • Todoist/Asana
+  • Notion API
+  • Slack integration
+end note
+
+@enduml

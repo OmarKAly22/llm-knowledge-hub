@@ -1,0 +1,76 @@
+@startuml
+!define AGENT1 #LightBlue
+!define AGENT2 #LightGreen
+!define AGENT3 #LightCoral
+
+title Multi-Agent System - Sequential Pipeline
+
+actor User
+
+rectangle "Sequential Pipeline Architecture" {
+    
+    component "Agent 1\nResearcher" as agent1 AGENT1
+    
+    component "Agent 2\nAnalyzer" as agent2 AGENT2
+    
+    component "Agent 3\nWriter" as agent3 AGENT3
+    
+    database "Shared\nContext" as context #WhiteSmoke
+}
+
+User -down-> agent1 : initial request
+agent1 -down-> context : research results
+context -down-> agent2 : pass data
+agent2 -down-> context : analysis results
+context -down-> agent3 : pass data
+agent3 -up-> User : final output
+
+note right of agent1
+  **Researcher Role**
+  • Gather information
+  • Web search & scraping
+  • Document retrieval
+  • Initial data collection
+  
+  Output: Raw research data
+end note
+
+note right of agent2
+  **Analyzer Role**
+  • Process research data
+  • Extract insights
+  • Identify patterns
+  • Generate statistics
+  
+  Output: Analyzed findings
+end note
+
+note right of agent3
+  **Writer Role**
+  • Synthesize information
+  • Create narrative
+  • Format output
+  • Polish final result
+  
+  Output: Polished report
+end note
+
+note bottom of context
+  **Use Cases:**
+  • Content creation pipelines
+  • Data processing workflows
+  • Report generation
+  • Multi-stage transformations
+  
+  **Advantages:**
+  • Clear separation of concerns
+  • Easy to debug each stage
+  • Can optimize each agent
+  
+  **Disadvantages:**
+  • Sequential bottleneck
+  • Failure propagates
+  • No parallelization
+end note
+
+@enduml

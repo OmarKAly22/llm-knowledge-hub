@@ -1,0 +1,89 @@
+@startuml
+!define MANAGER #LightBlue
+!define WORKER #LightGreen
+!define AGG #LightCoral
+
+title Multi-Agent System - Parallel Workers
+
+actor User
+
+rectangle "Parallel Workers Architecture" {
+    
+    component "Manager\nAgent" as manager MANAGER
+    
+    rectangle "Worker Pool" {
+        component "Worker 1" as worker1 WORKER
+        component "Worker 2" as worker2 WORKER
+        component "Worker 3" as worker3 WORKER
+    }
+    
+    component "Aggregator\nAgent" as aggregator AGG
+    
+    database "Task\nQueue" as queue #WhiteSmoke
+    database "Results\nStore" as results #WhiteSmoke
+}
+
+User -down-> manager : complex task
+manager -down-> queue : decompose into\nsubtasks
+
+queue -down-> worker1 : task 1
+queue -down-> worker2 : task 2
+queue -down-> worker3 : task 3
+
+worker1 -down-> results : result 1
+worker2 -down-> results : result 2
+worker3 -down-> results : result 3
+
+results -down-> aggregator : all results
+aggregator -up-> User : combined output
+
+note right of manager
+  **Manager Responsibilities**
+  • Task decomposition
+  • Work distribution
+  • Load balancing
+  • Priority assignment
+  • Monitor progress
+end note
+
+note right of worker1
+  **Worker Responsibilities**
+  • Execute assigned task
+  • Independent operation
+  • Report results
+  • Handle failures locally
+  
+  Workers can be:
+  • Identical (homogeneous)
+  • Specialized (heterogeneous)
+end note
+
+note right of aggregator
+  **Aggregator Responsibilities**
+  • Collect all results
+  • Resolve conflicts
+  • Merge data
+  • Quality check
+  • Format final output
+end note
+
+note bottom of queue
+  **Use Cases:**
+  • Parallel data processing
+  • Multi-source research
+  • Distributed computation
+  • Scalable workflows
+  
+  **Advantages:**
+  • High throughput
+  • Fault tolerance
+  • Horizontal scaling
+  • Efficient resource use
+  
+  **Disadvantages:**
+  • Coordination overhead
+  • Result merging complexity
+  • Potential race conditions
+end note
+
+@enduml

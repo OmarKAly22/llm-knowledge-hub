@@ -1,0 +1,75 @@
+@startuml
+!define BRAIN #LightBlue
+!define MEMORY #LightGreen
+!define TOOLS #LightCoral
+!define PERCEPTION #LightYellow
+!define PLANNING #Lavender
+
+title AI Agent Anatomy - Core Components
+
+actor User
+cloud Environment
+
+rectangle "AI Agent System" {
+    
+    component "Brain\n(LLM Core)" as brain BRAIN
+    
+    component "Memory" as memory MEMORY {
+        component "Short-term" as st
+        component "Long-term" as lt
+    }
+    
+    component "Tools/Actions" as tools TOOLS
+    
+    component "Perception" as perception PERCEPTION
+    
+    component "Planning" as planning PLANNING
+}
+
+User -down-> brain : provides\ngoals
+brain -up-> User : delivers\nresults
+
+brain -down-> memory : reads/writes
+brain -right-> planning : uses for\nstrategy
+brain -down-> tools : executes
+tools -right-> perception : feedback
+perception -left-> brain : informs
+planning -left-> brain : guides
+
+tools -down-> Environment : interacts
+Environment -up-> perception : observations
+
+note right of brain
+  **Reasoning Engine**
+  • Decides what to do next
+  • Processes observations
+  • Plans actions
+end note
+
+note bottom of memory
+  **Short-term:** Current context, recent history
+  **Long-term:** Patterns, preferences, solutions
+end note
+
+note right of tools
+  • API calls
+  • Database access
+  • Code execution
+  • File operations
+  • Web browsing
+end note
+
+note right of perception
+  • Environment observation
+  • Tool feedback
+  • Error messages
+  • State information
+end note
+
+note right of planning
+  • Goal decomposition
+  • Strategy formulation
+  • Task prioritization
+end note
+
+@enduml

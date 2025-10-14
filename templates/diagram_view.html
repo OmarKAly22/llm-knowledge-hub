@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - UML Diagrams{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-7xl">
+    
+    <!-- Back Button -->
+    <div class="mb-6">
+        <a href="/diagrams" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Diagrams
+        </a>
+    </div>
+
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-white mb-2">{{ title }}</h1>
+        <p class="text-gray-400">Interactive UML diagram</p>
+    </div>
+
+    <!-- Diagram Display -->
+    <div class="mb-8">
+        <div class="bg-white rounded-lg p-8 shadow-2xl">
+            <img src="{{ diagram_urls.svg }}" 
+                 alt="{{ title }}" 
+                 class="w-full h-auto mx-auto"
+                 style="max-width: 100%;">
+        </div>
+    </div>
+
+    <!-- Download Options -->
+    <div class="mb-8 flex flex-wrap gap-4">
+        <a href="{{ diagram_urls.svg }}" 
+           target="_blank"
+           class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download SVG
+        </a>
+        
+        <a href="{{ diagram_urls.png }}" 
+           target="_blank"
+           class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download PNG
+        </a>
+
+        <a href="https://www.plantuml.com/plantuml/uml/{{ diagram_urls.svg.split('/')[-1] }}" 
+           target="_blank"
+           class="inline-flex items-center px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+            Open in PlantUML Editor
+        </a>
+    </div>
+
+    <!-- Source Code Section -->
+    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+        <div class="flex items-center justify-between px-6 py-4 bg-gray-800/50 border-b border-gray-700">
+            <h2 class="text-xl font-semibold text-white flex items-center">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                </svg>
+                PlantUML Source Code
+            </h2>
+            <button onclick="copySource()" 
+                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors text-sm">
+                Copy Code
+            </button>
+        </div>
+        
+        <div class="p-6">
+            <pre class="overflow-x-auto"><code id="source-code" class="text-sm text-gray-300 language-plantuml">{{ puml_content }}</code></pre>
+        </div>
+    </div>
+
+    <!-- Usage Instructions -->
+    <div class="mt-8 p-6 bg-blue-900/20 rounded-lg border border-blue-500/30">
+        <h3 class="text-lg font-semibold text-white mb-3">💡 How to Use This Diagram</h3>
+        <ul class="space-y-2 text-gray-300 text-sm">
+            <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 text-blue-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span><strong>Download:</strong> Use SVG for scalability or PNG for presentations</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 text-blue-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span><strong>Customize:</strong> Copy the source code and modify it in a PlantUML editor</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="w-5 h-5 mr-2 text-blue-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span><strong>Share:</strong> Link directly to this page or download and share the image</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+function copySource() {
+    const code = document.getElementById('source-code').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        // Show success feedback
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('bg-green-600');
+        btn.classList.remove('bg-blue-600');
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('bg-green-600');
+            btn.classList.add('bg-blue-600');
+        }, 2000);
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,69 @@
+@startuml
+!define PLANNER #LightBlue
+!define EXECUTOR #LightGreen
+!define MONITOR #LightYellow
+!define REPLANNER #LightCoral
+
+title Planning Agent Architecture - Plan-and-Execute
+
+actor User
+
+rectangle "Planning Agent" {
+    
+    component "Planner\n(Strategic)" as planner PLANNER
+    
+    component "Plan\nStorage" as plan #WhiteSmoke
+    
+    component "Step\nExecutor" as executor EXECUTOR
+    
+    component "Progress\nMonitor" as monitor MONITOR
+    
+    component "Replanner\n(Adaptive)" as replanner REPLANNER
+}
+
+cloud "Tools &\nEnvironment" as env
+
+User -down-> planner : complex goal
+planner -down-> plan : generate\ncomplete plan
+plan -down-> executor : next step
+executor -down-> env : execute action
+env -up-> monitor : result
+monitor -right-> plan : update status
+
+monitor -down-> replanner : if step fails
+replanner -up-> plan : adjust plan
+plan -up-> User : final result\n(all steps done)
+
+note right of planner
+  **Planning Phase**
+  1. Analyze goal
+  2. Break into subtasks
+  3. Order dependencies
+  4. Estimate resources
+  
+  Example Plan:
+  Step 1: Research topic
+  Step 2: Analyze data
+  Step 3: Generate report
+end note
+
+note right of executor
+  **Execution Phase**
+  • Execute steps sequentially
+  • Or parallelize independent steps
+  • Report progress
+  • Handle errors
+end note
+
+note bottom of replanner
+  **Strengths:**
+  • Efficient for complex tasks
+  • Can parallelize steps
+  • Better resource estimation
+  
+  **Weaknesses:**
+  • Rigid when plans change
+  • Upfront planning cost
+end note
+
+@enduml

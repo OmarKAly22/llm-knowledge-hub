@@ -1,0 +1,131 @@
+@startuml
+!define DECOMPOSE #LightBlue
+!define SEARCH #LightGreen
+!define FETCH #LightCoral
+!define SYNTHESIZE #LightYellow
+
+title Common Agent Pattern - Research Agent
+
+actor User
+
+rectangle "Research Agent" {
+    
+    component "Question\nDecomposer" as decompose DECOMPOSE
+    
+    component "Web\nSearch" as search SEARCH
+    
+    component "Content\nFetcher" as fetch FETCH
+    
+    component "Document\nReader" as reader #Lavender
+    
+    component "Synthesizer" as synthesize SYNTHESIZE
+    
+    database "Research\nCache" as cache #WhiteSmoke
+}
+
+cloud "Web\nSources" as web
+
+User -down-> decompose : research question
+decompose -down-> search : sub-questions
+
+search -down-> web : query 1, 2, 3...
+web -up-> search : search results
+
+search -down-> fetch : URLs
+fetch -down-> web : retrieve pages
+web -up-> fetch : page content
+
+fetch -down-> reader : documents
+reader -down-> cache : extracted info
+
+cache -down-> synthesize : all findings
+synthesize -up-> User : final report
+
+note right of decompose
+  **Question Decomposition**
+  
+  Break down complex questions:
+  "What is the impact of AI 
+  on healthcare?"
+  
+  Sub-questions:
+  1. Current AI applications?
+  2. Success metrics?
+  3. Challenges & risks?
+  4. Future trends?
+  5. Cost implications?
+end note
+
+note right of search
+  **Web Search**
+  
+  Tools:
+  • Google/Bing API
+  • SerpAPI
+  • Brave Search
+  
+  Strategy:
+  • Query formulation
+  • Result filtering
+  • Source diversity
+  • Relevance ranking
+  
+  Returns: URLs + snippets
+end note
+
+note right of fetch
+  **Content Fetcher**
+  
+  Capabilities:
+  • HTTP requests
+  • PDF extraction
+  • HTML parsing
+  • Rate limiting
+  
+  Extract:
+  • Main content
+  • Metadata
+  • Citations
+  • Publication date
+end note
+
+note right of reader
+  **Document Reader**
+  
+  Process:
+  • Clean text
+  • Chunk content
+  • Extract key points
+  • Identify sources
+  
+  Handle:
+  • Academic papers
+  • News articles
+  • Blog posts
+  • Documentation
+end note
+
+note bottom of synthesize
+  **Synthesis Process**
+  
+  1. Organize by topic
+  2. Identify patterns
+  3. Resolve conflicts
+  4. Cite sources
+  5. Generate narrative
+  
+  Output formats:
+  • Executive summary
+  • Detailed report
+  • Q&A format
+  • Bullet points
+  
+  **Use Cases:**
+  • Market research
+  • Literature review
+  • Competitive analysis
+  • Due diligence
+  • Topic exploration
+end note
+
+@enduml

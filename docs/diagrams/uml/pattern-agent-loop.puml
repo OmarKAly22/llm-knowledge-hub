@@ -1,0 +1,124 @@
+@startuml
+!define INIT #LightBlue
+!define THINK #LightGreen
+!define ACT #LightCoral
+!define OBSERVE #LightYellow
+!define CHECK #Lavender
+
+title Critical Implementation Pattern - Agent Loop
+
+actor User
+
+rectangle "Agent Loop Implementation" {
+    
+    component "Initialize\nContext" as init INIT
+    
+    component "Think\n(LLM Decision)" as think THINK
+    
+    component "Check\nStopping\nCondition" as stop CHECK
+    
+    component "Act\n(Execute Action)" as act ACT
+    
+    component "Observe\n(Update Context)" as observe OBSERVE
+    
+    component "Safety\nCheck" as safety CHECK
+    
+    database "Context\nMemory" as context #WhiteSmoke
+}
+
+User -down-> init : task & goal
+init -down-> context : setup initial state
+context -down-> think : current context
+
+think -down-> stop : decision made
+stop -right-> act : not complete
+stop -up-> User : task complete\n(final answer)
+
+act -down-> observe : execution result
+observe -down-> safety : check safety
+safety -right-> context : update state
+safety -up-> User : handle failure\n(stuck/unsafe)
+
+context -up-> think : iterate\n(max iterations)
+
+note right of init
+  **Initialization**
+  • Parse user task
+  • Set up context
+  • Define success criteria
+  • Initialize memory
+  
+  Context includes:
+  • Task description
+  • Available tools
+  • History buffer
+  • Iteration counter
+end note
+
+note right of think
+  **Think Phase**
+  • Analyze current state
+  • Review past actions
+  • Plan next action
+  • Select tool to use
+  
+  LLM decides:
+  • What to do next
+  • Which tool to call
+  • When task is done
+end note
+
+note right of stop
+  **Stopping Conditions**
+  • Task completed successfully
+  • Final answer generated
+  • Max iterations reached
+  • Budget exceeded
+  • Safety violation
+  • Stuck in loop detected
+end note
+
+note right of act
+  **Action Execution**
+  • Call selected tool
+  • Execute function
+  • Handle errors
+  • Collect results
+  
+  Examples:
+  • API calls
+  • Database queries
+  • Code execution
+  • File operations
+end note
+
+note right of observe
+  **Observation Phase**
+  • Process tool results
+  • Update context
+  • Add to history
+  • Format for next iteration
+  
+  Captures:
+  • Success/failure
+  • Return values
+  • Error messages
+  • Side effects
+end note
+
+note bottom of safety
+  **Safety Checks**
+  • Validate actions
+  • Check budget limits
+  • Detect infinite loops
+  • Verify permissions
+  • Rate limiting
+  
+  **Key Parameters:**
+  • max_iterations: 10-50
+  • max_cost: budget limit
+  • allowed_actions: whitelist
+  • stuck_threshold: 3 repeats
+end note
+
+@enduml

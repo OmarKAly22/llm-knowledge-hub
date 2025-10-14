@@ -1,0 +1,156 @@
+@startuml
+!define VALIDATOR #LightBlue
+!define BUDGET #LightGreen
+!define APPROVAL #LightCoral
+!define AUDIT #LightYellow
+
+title Critical Implementation Pattern - Safety & Control
+
+rectangle "Safety & Control Architecture" {
+    
+    component "Action\nValidator" as validator VALIDATOR
+    
+    component "Budget\nTracker" as budget BUDGET
+    
+    component "Approval\nSystem" as approval APPROVAL
+    
+    component "Audit\nLogger" as audit AUDIT
+    
+    database "Security\nPolicy" as policy #WhiteSmoke
+    database "Usage\nMetrics" as metrics #WhiteSmoke
+}
+
+actor "Agent" as agent
+actor "Human\nSupervisor" as human
+cloud "External\nServices" as external
+
+agent -down-> validator : proposed action
+validator -down-> policy : check rules
+
+policy -up-> validator : action status
+validator -right-> agent : FORBIDDEN\n(reject)
+validator -down-> budget : SAFE\n(check budget)
+validator -down-> approval : REQUIRES_APPROVAL
+
+budget -down-> metrics : log usage
+budget -right-> agent : BUDGET_EXCEEDED
+budget -down-> audit : WITHIN_BUDGET
+
+approval -up-> human : request approval
+human -down-> approval : approve/reject
+approval -right-> agent : REJECTED
+approval -down-> audit : APPROVED
+
+audit -down-> external : execute action
+external -up-> audit : result
+audit -up-> agent : action result
+
+note right of validator
+  **Action Classification**
+  
+  SAFE (auto-approve):
+  • search
+  • read_file
+  • calculate
+  • get_data
+  
+  REQUIRES_APPROVAL:
+  • send_email
+  • make_purchase
+  • delete_file
+  • api_write
+  
+  FORBIDDEN:
+  • execute_arbitrary_code
+  • system_commands
+  • admin_operations
+  • data_exfiltration
+end note
+
+note right of policy
+  **Security Policy**
+  
+  Define:
+  • Whitelisted actions
+  • Blacklisted actions
+  • Approval required
+  • Rate limits
+  • Budget caps
+  
+  Example policy:
+  {
+    "safe": ["search", "read"],
+    "approval": ["email", "purchase"],
+    "forbidden": ["exec", "delete"],
+    "rate_limit": "10/min",
+    "max_cost": "$1.00"
+  }
+end note
+
+note right of budget
+  **Budget Tracking**
+  
+  Monitor:
+  • API call count
+  • Token usage
+  • Cost in dollars
+  • Time elapsed
+  
+  Limits:
+  MAX_API_CALLS = 20
+  MAX_TOKENS = 100k
+  MAX_COST = $1.00
+  MAX_TIME = 5 minutes
+  
+  Actions when exceeded:
+  • Stop execution
+  • Return partial result
+  • Notify user
+end note
+
+note right of approval
+  **Human-in-the-Loop**
+  
+  Request approval for:
+  • High-impact actions
+  • Financial transactions
+  • Data modifications
+  • External communications
+  
+  Include in request:
+  • What action
+  • Why (reasoning)
+  • Potential impact
+  • Alternatives
+  
+  Timeout: 5 minutes
+  Default: reject
+end note
+
+note bottom of audit
+  **Audit Logging**
+  
+  Log everything:
+  • All actions attempted
+  • Validation results
+  • Approval decisions
+  • Budget usage
+  • Execution outcomes
+  • Errors & failures
+  
+  Use for:
+  • Debugging
+  • Security review
+  • Performance analysis
+  • Compliance
+  • Training data
+  
+  **Critical Safeguards:**
+  • Action validation
+  • Budget limits
+  • Human approval
+  • Comprehensive logging
+  • Fail-safe defaults
+end note
+
+@enduml

@@ -1,235 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}LLM Knowledge Hub{% endblock %}</title>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}LLM Knowledge Hub{% endblock %}</title>
 
-    <style>
-      /* Custom Glass Morphism Styles */
-      .glass {
-        background: rgba(17, 25, 40, 0.75);
-        backdrop-filter: blur(16px) saturate(180%);
-        -webkit-backdrop-filter: blur(16px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.125);
-      }
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-      .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
+  <style>
+    /* Custom Glass Morphism Styles */
+    .glass {
+      background: rgba(17, 25, 40, 0.75);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.125);
+    }
 
-      body {
-        background: linear-gradient(
-          135deg,
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    body {
+      background: linear-gradient(135deg,
           #0f0c29 0%,
           #302b63 50%,
-          #24243e 100%
-        );
-        min-height: 100vh;
-        color: #e2e8f0;
-      }
+          #24243e 100%);
+      min-height: 100vh;
+      color: #e2e8f0;
+    }
 
-      /* Markdown Content Styling */
-      .markdown-content h1 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        color: #f7fafc;
-      }
+    /* Markdown Content Styling */
+    .markdown-content h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #f7fafc;
+    }
 
-      .markdown-content h2 {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-top: 1.5rem;
-        margin-bottom: 0.75rem;
-        color: #e2e8f0;
-      }
+    .markdown-content h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #e2e8f0;
+    }
 
-      .markdown-content h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
-        color: #cbd5e0;
-      }
+    .markdown-content h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      color: #cbd5e0;
+    }
 
-      .markdown-content p {
-        margin-bottom: 1rem;
-        line-height: 1.7;
-      }
+    .markdown-content p {
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
 
-      .markdown-content ul,
-      .markdown-content ol {
-        margin-left: 2rem;
-        margin-bottom: 1rem;
-      }
+    .markdown-content ul,
+    .markdown-content ol {
+      margin-left: 2rem;
+      margin-bottom: 1rem;
+    }
 
-      .markdown-content li {
-        margin-bottom: 0.5rem;
-      }
+    .markdown-content li {
+      margin-bottom: 0.5rem;
+    }
 
-      .markdown-content code {
-        background: rgba(99, 102, 241, 0.1);
-        padding: 0.2rem 0.4rem;
-        border-radius: 0.25rem;
-        font-family: "Courier New", monospace;
-        font-size: 0.9em;
-      }
+    .markdown-content code {
+      background: rgba(99, 102, 241, 0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+      font-family: "Courier New", monospace;
+      font-size: 0.9em;
+    }
 
-      .markdown-content pre {
-        background: rgba(17, 25, 40, 0.5);
-        padding: 1rem;
-        border-radius: 0.5rem;
-        overflow-x: auto;
-        margin-bottom: 1rem;
-      }
+    .markdown-content pre {
+      background: rgba(17, 25, 40, 0.5);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
 
-      .markdown-content pre code {
-        background: none;
-        padding: 0;
-      }
+    .markdown-content pre code {
+      background: none;
+      padding: 0;
+    }
 
-      .markdown-content a {
-        color: #667eea;
-        text-decoration: underline;
-      }
+    .markdown-content a {
+      color: #667eea;
+      text-decoration: underline;
+    }
 
-      .markdown-content a:hover {
-        color: #764ba2;
-      }
+    .markdown-content a:hover {
+      color: #764ba2;
+    }
 
-      .markdown-content blockquote {
-        border-left: 4px solid #667eea;
-        padding-left: 1rem;
-        margin: 1rem 0;
-        font-style: italic;
-        color: #a0aec0;
-      }
+    .markdown-content blockquote {
+      border-left: 4px solid #667eea;
+      padding-left: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+      color: #a0aec0;
+    }
 
-      .markdown-content table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1rem 0;
-      }
+    .markdown-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
 
-      .markdown-content th,
-      .markdown-content td {
-        border: 1px solid rgba(255, 255, 255, 0.125);
-        padding: 0.75rem;
-        text-align: left;
-      }
+    .markdown-content th,
+    .markdown-content td {
+      border: 1px solid rgba(255, 255, 255, 0.125);
+      padding: 0.75rem;
+      text-align: left;
+    }
 
-      .markdown-content th {
-        background: rgba(99, 102, 241, 0.1);
-        font-weight: 600;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="glass sticky top-0 z-50 mb-8">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex items-center">
-            <a href="/" class="text-2xl font-bold gradient-text">
-              🤖 LLM Knowledge Hub
-            </a>
-          </div>
-          <div class="hidden md:flex space-x-8 items-center">
-            <a href="/" class="hover:text-purple-400 transition">Home</a>
-            <a href="/llm-guide" class="hover:text-purple-400 transition"
-              >LLM Guide</a
-            >
-            <a href="/llm-qa" class="hover:text-purple-400 transition"
-              >LLM Q&A</a
-            >
-            <a href="/agentic-guide" class="hover:text-purple-400 transition"
-              >Agentic AI Guide</a
-            >
-            <a href="/agentic-qa" class="hover:text-purple-400 transition"
-              >Agentic AI Q&A</a
-            >
+    .markdown-content th {
+      background: rgba(99, 102, 241, 0.1);
+      font-weight: 600;
+    }
+  </style>
+</head>
 
-            <!-- GitHub Star Button -->
-            <a
-              href="https://github.com/OmarKAly22/llm-knowledge-hub"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition shadow-md"
-            >
-              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.262 3.9a1 1 0 00.95.69h4.1c.969 0 1.371 1.24.588 1.81l-3.317 2.41a1 1 0 00-.364 1.118l1.263 3.9c.3.921-.755 1.688-1.54 1.118l-3.317-2.41a1 1 0 00-1.176 0l-3.317 2.41c-.784.57-1.838-.197-1.539-1.118l1.263-3.9a1 1 0 00-.364-1.118L2.05 9.327c-.783-.57-.38-1.81.588-1.81h4.1a1 1 0 00.95-.69l1.262-3.9z"
-                />
-              </svg>
-              Star on GitHub
-            </a>
-          </div>
+<body>
+  <!-- Navigation -->
+  <nav class="glass sticky top-0 z-50 mb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="/" class="text-2xl font-bold gradient-text">
+            🤖 LLM Knowledge Hub
+          </a>
+        </div>
+        <div class="hidden md:flex space-x-8 items-center">
+          <a href="/" class="hover:text-purple-400 transition">Home</a>
+          <a href="/llm-guide" class="hover:text-purple-400 transition">LLM Guide</a>
+          <a href="/llm-qa" class="hover:text-purple-400 transition">LLM Q&A</a>
+          <a href="/agentic-guide" class="hover:text-purple-400 transition">Agentic AI Guide</a>
+          <a href="/agentic-qa" class="hover:text-purple-400 transition">Agentic AI Q&A</a>>
 
-          <div class="md:hidden">
-            <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
+          <a href="/diagrams"
+            class="px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-blue-600 hover:text-white flex items-center"
+            {% if request.path.startswith('/diagrams') %} style="background-color: rgb(37 99 235); color: white;" {%
+            endif %}>
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            📊 Diagrams
+          </a>
+
+          <!-- GitHub Star Button -->
+          <a href="https://github.com/OmarKAly22/llm-knowledge-hub" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition shadow-md">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.262 3.9a1 1 0 00.95.69h4.1c.969 0 1.371 1.24.588 1.81l-3.317 2.41a1 1 0 00-.364 1.118l1.263 3.9c.3.921-.755 1.688-1.54 1.118l-3.317-2.41a1 1 0 00-1.176 0l-3.317 2.41c-.784.57-1.838-.197-1.539-1.118l1.263-3.9a1 1 0 00-.364-1.118L2.05 9.327c-.783-.57-.38-1.81.588-1.81h4.1a1 1 0 00.95-.69l1.262-3.9z" />
+            </svg>
+            Star on GitHub
+          </a>
+        </div>
+
+        <div class="md:hidden">
+          <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </div>
-      <!-- Mobile menu -->
-      <div id="mobile-menu" class="hidden md:hidden pb-4 px-4">
-        <a href="/" class="block py-2 hover:text-purple-400">Home</a>
-        <a href="/llm-guide" class="block py-2 hover:text-purple-400"
-          >LLM Guide</a
-        >
-        <a href="/llm-qa" class="block py-2 hover:text-purple-400">LLM Q&A</a>
-        <a href="/agentic-guide" class="block py-2 hover:text-purple-400"
-          >Agentic AI Guide</a
-        >
-        <a href="/agentic-qa" class="block py-2 hover:text-purple-400"
-          >Agentic AI Q&A</a
-        >
-      </div>
-    </nav>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden pb-4 px-4">
+      <a href="/" class="block py-2 hover:text-purple-400">Home</a>
+      <a href="/llm-guide" class="block py-2 hover:text-purple-400">LLM Guide</a>
+      <a href="/llm-qa" class="block py-2 hover:text-purple-400">LLM Q&A</a>
+      <a href="/agentic-guide" class="block py-2 hover:text-purple-400">Agentic AI Guide</a>
+      <a href="/agentic-qa" class="block py-2 hover:text-purple-400">Agentic AI Q&A</a>
+    </div>
+  </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {% block content %}{% endblock %}
-    </main>
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {% block content %}{% endblock %}
+  </main>
 
-    <!-- Footer -->
-    <footer class="mt-16 py-8 text-center text-gray-400">
-      <p>Started with passion by Omar Aly</p>
-      <p class="mt-2">Let's continue with Creativity by the community</p>
-      <p class="mt-2">Powered by 🐍 Python & 🌶️ Flask</p>
-    </footer>
+  <!-- Footer -->
+  <footer class="mt-16 py-8 text-center text-gray-400">
+    <p>Started with passion by Omar Aly</p>
+    <p class="mt-2">Let's continue with Creativity by the community</p>
+    <p class="mt-2">Powered by 🐍 Python & 🌶️ Flask</p>
+  </footer>
 
-    <script>
-      // Mobile menu toggle
-      document
-        .getElementById("mobile-menu-btn")
-        .addEventListener("click", function () {
-          const menu = document.getElementById("mobile-menu");
-          menu.classList.toggle("hidden");
-        });
-    </script>
+  <script>
+    // Mobile menu toggle
+    document
+      .getElementById("mobile-menu-btn")
+      .addEventListener("click", function () {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      });
+  </script>
 
-    {% block extra_js %}{% endblock %}
-  </body>
+  {% block extra_js %}{% endblock %}
+</body>
+
 </html>

@@ -1,0 +1,160 @@
+@startuml
+!define SHORT #LightBlue
+!define LONG #LightGreen
+!define VECTOR #LightCoral
+!define MANAGER #LightYellow
+
+title Critical Implementation Pattern - Memory Management
+
+rectangle "Memory Management Architecture" {
+    
+    component "Memory\nManager" as manager MANAGER
+    
+    rectangle "Short-term Memory" as shortterm SHORT {
+        component "Conversation\nBuffer" as buffer
+        component "Token\nCounter" as tokens
+        component "Summarizer" as summarizer
+    }
+    
+    rectangle "Long-term Memory" as longterm LONG {
+        database "Vector\nDatabase" as vector VECTOR
+        database "Structured\nDatabase" as structured #WhiteSmoke
+        database "File\nSystem" as files #WhiteSmoke
+    }
+}
+
+actor "Agent" as agent
+
+agent -down-> manager : store/retrieve
+manager -down-> buffer : add message
+buffer -right-> tokens : check size
+tokens -down-> summarizer : if exceeds limit
+summarizer -up-> buffer : replace old\nwith summary
+
+manager -down-> vector : semantic search
+manager -down-> structured : query facts
+manager -down-> files : read/write docs
+
+vector -up-> manager : relevant context
+structured -up-> manager : specific data
+files -up-> manager : document content
+
+note right of buffer
+  **Conversation Buffer**
+  
+  Stores:
+  • Recent messages
+  • Tool calls & results
+  • Agent thoughts
+  • User inputs
+  
+  Strategies:
+  • Rolling window
+  • Token-based limit
+  • Importance-based
+  • Summarization
+  
+  max_tokens: 4000-8000
+end note
+
+note right of tokens
+  **Token Management**
+  
+  Monitor:
+  • Current token count
+  • Remaining budget
+  • Per-message size
+  
+  Actions when limit hit:
+  1. Remove oldest messages
+  2. Summarize old content
+  3. Keep system prompts
+  4. Preserve recent context
+end note
+
+note right of summarizer
+  **Summarization Strategy**
+  
+  When to summarize:
+  • Buffer > 75% full
+  • Old messages < 30 mins
+  
+  What to keep:
+  • Key decisions made
+  • Important facts
+  • Action outcomes
+  • Error patterns
+  
+  What to drop:
+  • Verbose reasoning
+  • Intermediate steps
+  • Repeated info
+end note
+
+note right of vector
+  **Vector Database**
+  
+  Use for:
+  • Semantic search
+  • Similar past cases
+  • RAG (retrieval)
+  • Experience lookup
+  
+  Storage:
+  • Past conversations
+  • Learned patterns
+  • User preferences
+  • Success/failure cases
+  
+  Technologies:
+  • Pinecone, Weaviate
+  • ChromaDB, Qdrant
+  • FAISS (local)
+end note
+
+note right of structured
+  **Structured Database**
+  
+  Use for:
+  • User profiles
+  • Settings & config
+  • Task history
+  • Metrics & logs
+  
+  Schema examples:
+  • user_preferences
+  • task_results
+  • tool_usage_stats
+  • error_logs
+  
+  Technologies:
+  • PostgreSQL
+  • SQLite
+  • MongoDB
+end note
+
+note bottom of files
+  **File System Storage**
+  
+  Use for:
+  • Documents
+  • Generated content
+  • Large data files
+  • Artifacts
+  
+  Organization:
+  /memory/
+    /conversations/
+    /documents/
+    /artifacts/
+    /cache/
+  
+  **Key Principles:**
+  • Separate short vs long-term
+  • Token budget management
+  • Intelligent truncation
+  • Multi-tier storage
+  • Efficient retrieval
+end note
+
+@enduml

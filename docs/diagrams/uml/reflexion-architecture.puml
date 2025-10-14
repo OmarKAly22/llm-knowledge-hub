@@ -1,0 +1,92 @@
+@startuml
+!define ATTEMPT #LightBlue
+!define EVAL #LightYellow
+!define REFLECT #LightCoral
+!define IMPROVE #LightGreen
+
+title Reflexion Architecture - Self-Correcting Agent
+
+actor User
+
+rectangle "Reflexion Agent" {
+    
+    component "Task\nAttempt" as attempt ATTEMPT
+    
+    component "Result\nEvaluator" as evaluator EVAL
+    
+    component "Reflection\nEngine" as reflect REFLECT
+    
+    component "Strategy\nImprover" as improve IMPROVE
+    
+    database "Attempt\nHistory" as history #WhiteSmoke
+}
+
+cloud "Environment\n& Tools" as env
+
+User -down-> attempt : initial task
+attempt -down-> env : execute attempt
+env -up-> evaluator : result
+evaluator -down-> history : store attempt
+
+evaluator -right-> reflect : if failed/\nsuboptimal
+reflect -down-> history : analyze past\nattempts
+reflect -right-> improve : generate\nimprovements
+improve -up-> attempt : retry with\nnew strategy
+
+evaluator -up-> User : success!\nfinal result
+
+note right of attempt
+  **Attempt Phase**
+  • Execute current strategy
+  • Use available tools
+  • Generate output
+  
+  Iteration 1: Basic approach
+  Iteration 2: Refined approach
+  Iteration N: Optimized solution
+end note
+
+note right of evaluator
+  **Evaluation Criteria**
+  • Correctness
+  • Completeness
+  • Quality
+  • Efficiency
+  
+  Can use:
+  • Unit tests (code)
+  • LLM-as-judge
+  • Metrics/rules
+end note
+
+note right of reflect
+  **Reflection Questions**
+  • What went wrong?
+  • Why did it fail?
+  • What can improve?
+  • What to try next?
+  
+  Example: "The code failed tests
+  because I didn't handle edge 
+  cases. Next attempt: add 
+  input validation."
+end note
+
+note bottom of improve
+  **Use Cases:**
+  • Code generation (write-test-fix)
+  • Research (search-evaluate-refine)
+  • Complex problem-solving
+  
+  **Strengths:**
+  • Higher success rates
+  • Better quality outputs
+  • Learns within session
+  
+  **Weaknesses:**
+  • More API calls (cost)
+  • Can loop infinitely
+  • Needs stop criteria
+end note
+
+@enduml

@@ -1,0 +1,176 @@
+@startuml
+!define AGENT #LightBlue
+!define TRACKER #LightGreen
+!define LEARNER #LightCoral
+!define ADAPTER #LightYellow
+
+title Advanced Pattern - Learning Agents
+
+actor User
+
+rectangle "Learning Agent System" {
+    
+    component "Agent\nCore" as agent AGENT
+    
+    component "Performance\nTracker" as tracker TRACKER
+    
+    component "Pattern\nLearner" as learner LEARNER
+    
+    component "Strategy\nAdapter" as adapter ADAPTER
+    
+    database "Success/Failure\nDatabase" as sfdb #WhiteSmoke
+    database "Strategy\nLibrary" as strategies #Lavender
+}
+
+cloud "Environment" as env
+
+User -down-> agent : task
+agent -down-> strategies : load strategy
+strategies -up-> agent : current best
+
+agent -down-> env : execute
+env -up-> tracker : outcome
+
+tracker -down-> sfdb : record result
+sfdb -down-> learner : analyze patterns
+
+learner -down-> adapter : insights
+adapter -down-> strategies : update strategies
+
+strategies -up-> agent : improved strategy
+agent -up-> User : result
+
+note right of agent
+  **Agent Core**
+  
+  Uses current best:
+  • Strategy selection
+  • Tool choices
+  • Parameter settings
+  • Approach variations
+  
+  Adapts based on:
+  • Past performance
+  • Task characteristics
+  • Context similarity
+  • Success patterns
+end note
+
+note right of tracker
+  **Performance Tracking**
+  
+  Metrics:
+  • Success rate
+  • Completion time
+  • Cost (API calls)
+  • Quality score
+  • Error types
+  
+  Context:
+  • Task type
+  • Input characteristics
+  • Strategy used
+  • Environment state
+  • Timestamp
+end note
+
+note right of sfdb
+  **Success/Failure Database**
+  
+  Schema:
+  {
+    "task_id": "uuid",
+    "task_type": "code_gen",
+    "strategy": "test_driven",
+    "outcome": "success",
+    "metrics": {...},
+    "context": {...},
+    "timestamp": "2024-10-14"
+  }
+  
+  Enables:
+  • Pattern analysis
+  • A/B testing
+  • Performance trends
+  • Root cause analysis
+end note
+
+note right of learner
+  **Pattern Learning**
+  
+  Discovers:
+  • What works when
+  • Common failure modes
+  • Optimal tool sequences
+  • Context-strategy mapping
+  
+  Techniques:
+  • Statistical analysis
+  • Clustering
+  • Association rules
+  • Bayesian inference
+  
+  Example insights:
+  • "Test-driven approach works
+    best for data processing"
+  • "Web search before code gen
+    improves success by 30%"
+end note
+
+note right of adapter
+  **Strategy Adaptation**
+  
+  Actions:
+  1. Analyze learned patterns
+  2. Generate new strategies
+  3. Modify existing ones
+  4. A/B test variations
+  5. Promote successful ones
+  
+  Adaptation types:
+  • Parameter tuning
+  • Tool order changes
+  • Stopping criteria
+  • Error handling
+  • Retry logic
+end note
+
+note bottom of strategies
+  **Strategy Library**
+  
+  Contains:
+  • Named strategies
+  • Success rates
+  • Use cases
+  • Parameters
+  • Versions
+  
+  Example:
+  "research_comprehensive":
+    - success_rate: 0.85
+    - steps: [decompose, search, 
+              fetch, synthesize]
+    - best_for: ["complex topics"]
+    - version: 3
+  
+  Evolution:
+  • Track performance
+  • Create variations
+  • Test improvements
+  • Retire poor performers
+  
+  **Benefits:**
+  • Continuous improvement
+  • Adaptation to patterns
+  • Optimized performance
+  • Domain specialization
+  • Self-improvement
+  
+  **Techniques:**
+  • Reinforcement learning
+  • Bandit algorithms
+  • A/B testing
+  • Performance analytics
+end note
+
+@enduml

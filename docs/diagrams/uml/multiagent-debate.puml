@@ -1,0 +1,97 @@
+@startuml
+!define PROPOSER #LightBlue
+!define CRITIC #LightCoral
+!define JUDGE #LightGreen
+
+title Multi-Agent System - Debate/Consensus
+
+actor User
+
+rectangle "Debate/Consensus Architecture" {
+    
+    component "Agent A\nProposer" as agentA PROPOSER
+    
+    component "Agent B\nCritic" as agentB CRITIC
+    
+    component "Agent C\nJudge" as agentC JUDGE
+    
+    database "Debate\nHistory" as history #WhiteSmoke
+}
+
+User -down-> agentA : problem statement
+
+agentA -down-> history : initial proposal
+history -down-> agentB : review proposal
+agentB -down-> history : critique & counter
+history -up-> agentA : consider critique
+agentA -down-> history : refined proposal
+
+history -down-> agentC : evaluate debate
+agentC -right-> agentB : request more input
+agentB -down-> history : additional critique
+agentC -left-> agentA : request clarification
+agentA -down-> history : clarification
+
+agentC -up-> User : final decision\n& reasoning
+
+note right of agentA
+  **Proposer Role**
+  • Generate solutions
+  • Defend positions
+  • Refine based on feedback
+  • Provide evidence
+  
+  Characteristics:
+  • Creative & generative
+  • Solution-oriented
+  • Adaptive to criticism
+end note
+
+note right of agentB
+  **Critic Role**
+  • Identify flaws
+  • Challenge assumptions
+  • Provide counterarguments
+  • Test edge cases
+  
+  Characteristics:
+  • Analytical & skeptical
+  • Detail-oriented
+  • Devil's advocate
+end note
+
+note right of agentC
+  **Judge Role**
+  • Evaluate arguments
+  • Weigh evidence
+  • Ensure quality
+  • Make final decision
+  
+  Characteristics:
+  • Objective & balanced
+  • Fair evaluation
+  • Clear reasoning
+end note
+
+note bottom of history
+  **Use Cases:**
+  • Complex decision-making
+  • Code review systems
+  • Strategic planning
+  • Quality assurance
+  • Research validation
+  
+  **Advantages:**
+  • Higher quality outputs
+  • Diverse perspectives
+  • Built-in error checking
+  • Transparent reasoning
+  
+  **Disadvantages:**
+  • More API calls (expensive)
+  • Longer processing time
+  • Can reach stalemate
+  • Requires good stopping criteria
+end note
+
+@enduml

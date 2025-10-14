@@ -1,0 +1,146 @@
+@startuml
+!define EXPLORE #LightBlue
+!define CLEAN #LightGreen
+!define ANALYZE #LightCoral
+!define VISUALIZE #LightYellow
+
+title Common Agent Pattern - Data Analysis Agent
+
+actor User
+
+rectangle "Data Analysis Agent" {
+    
+    component "Data\nExplorer" as explore EXPLORE
+    
+    component "Data\nCleaner" as clean CLEAN
+    
+    component "Statistical\nAnalyzer" as analyze ANALYZE
+    
+    component "Visualization\nGenerator" as visualize VISUALIZE
+    
+    component "Insight\nExtractor" as insights #Lavender
+    
+    database "Data\nStore" as datastore #WhiteSmoke
+}
+
+cloud "Data\nSources" as sources
+
+User -down-> explore : analysis request
+explore -down-> sources : query data
+sources -up-> datastore : raw data
+
+datastore -down-> clean : preprocess
+clean -down-> datastore : cleaned data
+
+datastore -down-> analyze : perform analysis
+analyze -down-> visualize : results
+visualize -down-> insights : charts + stats
+
+insights -up-> User : final report
+
+note right of explore
+  **Data Exploration**
+  
+  Initial steps:
+  • Load data
+  • Inspect schema
+  • Check data types
+  • Count rows/columns
+  • Identify missing values
+  • Detect outliers
+  
+  Tools:
+  • pandas.head()
+  • df.info()
+  • df.describe()
+  • df.dtypes
+end note
+
+note right of clean
+  **Data Cleaning**
+  
+  Operations:
+  • Handle missing values
+  • Remove duplicates
+  • Fix data types
+  • Normalize formats
+  • Filter outliers
+  • Validate ranges
+  
+  Strategies:
+  • Drop nulls
+  • Fill with mean/median
+  • Forward/backward fill
+  • Interpolation
+end note
+
+note right of analyze
+  **Statistical Analysis**
+  
+  Techniques:
+  • Descriptive stats
+  • Correlation analysis
+  • Trend detection
+  • Hypothesis testing
+  • Regression
+  • Clustering
+  • Time series
+  
+  Libraries:
+  • pandas
+  • numpy
+  • scipy
+  • statsmodels
+  • scikit-learn
+end note
+
+note right of visualize
+  **Visualization**
+  
+  Chart types:
+  • Line plots (trends)
+  • Bar charts (categories)
+  • Scatter plots (correlation)
+  • Histograms (distribution)
+  • Heatmaps (matrices)
+  • Box plots (outliers)
+  
+  Libraries:
+  • matplotlib
+  • seaborn
+  • plotly
+  • bokeh
+end note
+
+note bottom of insights
+  **Insight Generation**
+  
+  Summarize findings:
+  • Key statistics
+  • Notable patterns
+  • Anomalies
+  • Correlations
+  • Recommendations
+  
+  Report structure:
+  1. Executive summary
+  2. Methodology
+  3. Findings
+  4. Visualizations
+  5. Conclusions
+  
+  **Use Cases:**
+  • Business analytics
+  • Scientific research
+  • Financial analysis
+  • Marketing insights
+  • Operational metrics
+  
+  **Tools:**
+  • SQL databases
+  • Python/pandas
+  • Jupyter notebooks
+  • Visualization libs
+end note
+
+@enduml
