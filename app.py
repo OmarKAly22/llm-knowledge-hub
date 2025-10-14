@@ -41,7 +41,8 @@ def plantuml_encode(plantuml_text):
 @app.route('/diagrams')
 def diagrams_index():
     """Display all available diagrams"""
-    diagrams_dir = Path('docs/diagrams')
+    # FIXED: Changed from 'docs/diagrams' to 'docs/diagrams/uml'
+    diagrams_dir = Path('docs/diagrams/uml')
     
     # Organize diagrams by category
     categories = {
@@ -96,7 +97,8 @@ def diagrams_index():
 @app.route('/diagrams/<diagram_name>')
 def show_diagram(diagram_name):
     """Display a specific diagram"""
-    puml_file = Path(f'docs/diagrams/{diagram_name}.puml')
+    # FIXED: Changed from 'docs/diagrams/{diagram_name}.puml' to 'docs/diagrams/uml/{diagram_name}.puml'
+    puml_file = Path(f'docs/diagrams/uml/{diagram_name}.puml')
     
     if not puml_file.exists():
         return "Diagram not found", 404
