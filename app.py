@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template, request, jsonify
 import markdown2
-import base64
 import zlib
 from pathlib import Path
 
@@ -33,10 +32,45 @@ def load_markdown(filename):
 
 
 def plantuml_encode(plantuml_text):
-    """Encode PlantUML text for URL"""
+    """
+    Encode PlantUML text for URL using PlantUML's custom encoding.
+    PlantUML uses a special base64 variant, not standard base64.
+    """
+    # PlantUML's custom base64 alphabet
+    plantuml_alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'
+    
+    # Compress the text
     zlibbed_str = zlib.compress(plantuml_text.encode('utf-8'))
-    compressed_string = zlibbed_str[2:-4]
-    return base64.urlsafe_b64encode(compressed_string).decode('utf-8')
+    compressed_string = zlibbed_str[2:-4]  # Remove zlib header and checksum
+    
+    # Encode using PlantUML's custom base64
+    encoded = ""
+    i = 0
+    while i < len(compressed_string):
+        if i + 2 < len(compressed_string):
+            # Process 3 bytes at a time
+            b1, b2, b3 = compressed_string[i:i+3]
+            encoded += plantuml_alphabet[(b1 >> 2) & 0x3F]
+            encoded += plantuml_alphabet[((b1 & 0x3) << 4) | ((b2 >> 4) & 0xF)]
+            encoded += plantuml_alphabet[((b2 & 0xF) << 2) | ((b3 >> 6) & 0x3)]
+            encoded += plantuml_alphabet[b3 & 0x3F]
+            i += 3
+        elif i + 1 < len(compressed_string):
+            # Process 2 bytes
+            b1, b2 = compressed_string[i:i+2]
+            encoded += plantuml_alphabet[(b1 >> 2) & 0x3F]
+            encoded += plantuml_alphabet[((b1 & 0x3) << 4) | ((b2 >> 4) & 0xF)]
+            encoded += plantuml_alphabet[(b2 & 0xF) << 2]
+            i += 2
+        else:
+            # Process 1 byte
+            b1 = compressed_string[i]
+            encoded += plantuml_alphabet[(b1 >> 2) & 0x3F]
+            encoded += plantuml_alphabet[(b1 & 0x3) << 4]
+            i += 1
+    
+    return encoded
+
 
 @app.route('/diagrams')
 def diagrams_index():
@@ -94,6 +128,7 @@ def diagrams_index():
     
     return render_template('diagrams_index.html', categories=categories)
 
+
 @app.route('/diagrams/<diagram_name>')
 def show_diagram(diagram_name):
     """Display a specific diagram"""
@@ -125,6 +160,7 @@ def show_diagram(diagram_name):
                          title=title,
                          diagram_urls=diagram_urls,
                          puml_content=puml_content)
+
 
 # Routes
 @app.route("/")

@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8 max-w-7xl">
-    
+
     <!-- Header -->
     <div class="mb-12 text-center">
         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -15,61 +15,19 @@
         </p>
     </div>
 
-    <!-- Diagrams by Category -->
-    {% for category, diagrams in categories.items() %}
-        {% if diagrams %}
-        <div class="mb-12">
-            <!-- Category Header -->
-            <div class="flex items-center mb-6">
-                <h2 class="text-3xl font-bold text-white">{{ category }}</h2>
-                <span class="ml-4 px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">
-                    {{ diagrams|length }} diagram{{ 's' if diagrams|length > 1 else '' }}
-                </span>
-            </div>
-
-            <!-- Diagram Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {% for diagram in diagrams %}
-                <a href="{{ diagram.url }}" 
-                   class="group block p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-1">
-                    
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
-                            {{ diagram.title }}
-                        </h3>
-                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </div>
-                    
-                    <p class="text-sm text-gray-400">
-                        Click to view interactive diagram
-                    </p>
-                    
-                    <div class="mt-4 flex items-center text-xs text-gray-500">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        PlantUML
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-    {% endfor %}
-
     <!-- Usage Instructions -->
     <div class="mt-16 p-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-lg border border-blue-500/30">
         <h3 class="text-2xl font-bold text-white mb-4">📖 How to Use These Diagrams</h3>
         <div class="grid md:grid-cols-2 gap-6 text-gray-300">
             <div>
                 <h4 class="font-semibold text-blue-300 mb-2">View Online</h4>
-                <p class="text-sm">Click any diagram to view it in high-resolution SVG format with interactive features.</p>
+                <p class="text-sm">Click any diagram to view it in high-resolution SVG format with interactive features.
+                </p>
             </div>
             <div>
                 <h4 class="font-semibold text-blue-300 mb-2">Download</h4>
-                <p class="text-sm">Each diagram page offers PNG and SVG download options for presentations and documentation.</p>
+                <p class="text-sm">Each diagram page offers PNG and SVG download options for presentations and
+                    documentation.</p>
             </div>
             <div>
                 <h4 class="font-semibold text-blue-300 mb-2">Source Code</h4>
@@ -81,6 +39,52 @@
             </div>
         </div>
     </div>
+
+    <!-- Diagrams by Category -->
+    {% for category, diagrams in categories.items() %}
+    {% if diagrams %}
+    <div class="mb-12">
+        <!-- Category Header -->
+        <div class="flex items-center mb-6">
+            <h2 class="text-3xl font-bold text-white">{{ category }}</h2>
+            <span class="ml-4 px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">
+                {{ diagrams|length }} diagram{{ 's' if diagrams|length > 1 else '' }}
+            </span>
+        </div>
+
+        <!-- Diagram Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for diagram in diagrams %}
+            <a href="{{ diagram.url }}"
+                class="group block p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 hover:-translate-y-1">
+
+                <div class="flex items-start justify-between mb-3">
+                    <h3 class="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
+                        {{ diagram.title }}
+                    </h3>
+                    <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+
+                <p class="text-sm text-gray-400">
+                    Click to view interactive diagram
+                </p>
+
+                <div class="mt-4 flex items-center text-xs text-gray-500">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    PlantUML
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
 
 </div>
 {% endblock %}
