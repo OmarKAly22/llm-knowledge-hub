@@ -23,6 +23,13 @@ A community-driven knowledge base for software engineers working with LLMs and A
 
 ---
 
+## 📊 Project Architecture Overview
+Let me start with a high-level view of how the LLM Knowledge Hub is structured:
+
+![System Architecture Diagram](docs/diagrams/architecture/system_arch_diagram.png)
+
+---
+
 ## 🚀 Quick Start
 
 ### For Readers (Run Locally)
