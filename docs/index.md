@@ -31,7 +31,7 @@ This 12-part series takes you behind the scenes of building an educational AI pl
 
 📊 **Topics Covered:** System Architecture | Flask | Open Source | Project Overview
 
-[Read Article →](./articles/article-01-introduction.md) | [Medium Version →](https://medium.com/@omark.k.aly/cd287d538d84)
+[Read Article →](./docs/articles/article-01-introduction.md) | [Medium Version →](https://medium.com/@omark.k.aly/cd287d538d84)
 
 ---
 
