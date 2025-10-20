@@ -1,0 +1,21 @@
+title: LLM Engineering Hub
+description: Your 12-week journey to mastering LLM engineering
+theme: jekyll-theme-cayman
+# Other good themes: minima, jekyll-theme-slate, jekyll-theme-architect
+
+# Optional: Add plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Articles
+    url: /articles/
+  - title: Guides
+    url: /guides/
+  - title: GitHub
+    url: https://github.com/omarkaly22/llm-engineering-hub
