@@ -20,7 +20,7 @@ This 12-part series takes you behind the scenes of building an educational AI pl
 
 ### Published
 
-#### [Part 1: Introduction to the LLM Knowledge Hub](./docs/article-01-introduction.md)
+#### [Part 1: Introduction to the LLM Knowledge Hub](./docs/articles/article-01-introduction.md)
 *Published: October 20, 2025*
 
 🎯 **What You'll Learn:**
@@ -31,7 +31,7 @@ This 12-part series takes you behind the scenes of building an educational AI pl
 
 📊 **Topics Covered:** System Architecture | Flask | Open Source | Project Overview
 
-[Read Article →](./docs/article-01-introduction.md) | [Medium Version →](https://medium.com/@omark.k.aly/cd287d538d84)
+[Read Article →](./articles/article-01-introduction.md) | [Medium Version →](https://medium.com/@omark.k.aly/cd287d538d84)
 
 ---
 
@@ -287,7 +287,7 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 <div align="center">
   <h3>📖 Start Reading the Series</h3>
-  <a href="./docs/article-01-introduction.md">
+  <a href="./docs/articles/article-01-introduction.md">
     <img src="https://img.shields.io/badge/Start%20Here-Part%201%3A%20Introduction-blue?style=for-the-badge" alt="Start Reading">
   </a>
 </div>
