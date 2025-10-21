@@ -1,6 +1,6 @@
 # Building an Open-Source LLM Knowledge Hub: A 12-Part Journey into AI Engineering Excellence
 
-## 🚀 Introducing the LLM Knowledge Hub: Your Gateway to Mastering Large Language Models and Agentic AI
+## Introducing the LLM Knowledge Hub: Your Gateway to Mastering Large Language Models and Agentic AI
 
 *Part 1 of a 12-article series on building and understanding the LLM Knowledge Hub - an open-source platform for AI engineers*
 
@@ -16,92 +16,7 @@ Today, I'm excited to introduce the **[LLM Knowledge Hub](https://github.com/Oma
 
 ---
 
-## 📊 Project Architecture Overview
-
-Let me start with a high-level view of how the LLM Knowledge Hub is structured:
-
-```plantuml
-@startuml
-!theme blueprint
-skinparam backgroundColor #FEFEFE
-skinparam packageBackgroundColor #E8F4FF
-skinparam componentBackgroundColor #FFF9E6
-skinparam noteBackgroundColor #FFE6E6
-
-title LLM Knowledge Hub - System Architecture
-
-package "Frontend Layer" {
-  [Web Interface] as UI
-  [Template Engine] as TE
-  [Static Assets] as SA
-  
-  UI --> TE : Renders
-  UI --> SA : Loads CSS/JS
-}
-
-package "Application Layer" {
-  [Flask Server] as FS
-  [Route Handlers] as RH
-  [Markdown Processor] as MP
-  [PlantUML Encoder] as PE
-  
-  FS --> RH : Routes requests
-  RH --> MP : Processes content
-  RH --> PE : Generates diagrams
-}
-
-package "Content Layer" {
-  database "Knowledge Base" as KB {
-    folder "Guides" {
-      file "LLM Guide"
-      file "Agentic AI Guide"
-    }
-    folder "Q&A Collections" {
-      file "LLM Q&A"
-      file "Agentic Q&A"
-    }
-    folder "Code Examples" {
-      file "Python Examples"
-      file "Integration Patterns"
-    }
-  }
-  
-  folder "Resources" {
-    file "Glossary"
-    file "Tools & Frameworks"
-    file "Learning Resources"
-  }
-}
-
-package "Deployment" {
-  cloud "Render Platform" as RP
-  
-  RP --> FS : Hosts application
-}
-
-User --> UI : Accesses hub
-UI --> FS : HTTP Requests
-FS --> KB : Fetches content
-FS --> Resources : Loads resources
-
-note right of KB
-  - Markdown-based content
-  - Version controlled
-  - Community contributed
-end note
-
-note bottom of RP
-  Deployed on Render
-  Auto-scaling enabled
-  HTTPS secured
-end note
-
-@enduml
-```
-
----
-
-## 🎯 Why This Project Exists
+## Why This Project Exists
 
 ### The Problem Space
 
@@ -123,7 +38,7 @@ The LLM Knowledge Hub addresses these challenges by providing:
 
 ---
 
-## 📋 What This Series Covers
+## What This Series Covers
 
 Over the next 11 articles, we'll explore every aspect of building and understanding the LLM Knowledge Hub:
 
@@ -191,49 +106,14 @@ Over the next 11 articles, we'll explore every aspect of building and understand
 
 ---
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 Let's examine the technology choices that power the Knowledge Hub:
 
-```plantuml
-@startuml
-!theme plain
-skinparam backgroundColor #FFFFFF
-skinparam roundcorner 10
-skinparam shadowing false
-skinparam ArrowColor #4A90E2
-skinparam defaultFontSize 12
-
-title Technology Stack - LLM Knowledge Hub
-
-package "Frontend" #E8F4FD {
-  component [Jinja2 + Bootstrap + JavaScript] as FE
-}
-
-package "Backend" #FFF3E0 {
-  component [Flask + Python 3.8+] as BE
-}
-
-package "Content" #E8F5E9 {
-  component [Markdown + Git] as CM
-}
-
-package "Cloud" #FCE4EC {
-  component [Render Platform] as DP
-}
-
-FE -down-> BE : Requests
-BE -down-> CM : Reads
-CM -right-> DP : Deploy
-FE -[hidden]right-> DP
-
-note bottom of FE : Clean UI with\nserver-side rendering
-note bottom of BE : Lightweight\nweb framework
-note bottom of CM : Version-controlled\ncontent
-note bottom of DP : Auto-scaling\n& HTTPS
-
-@enduml
-```
+<figure>
+  <img src="../diagrams/architecture/tech_stack_diagram.png" alt="Current Technical Stack (as of publication 20.10.25)" width="800">
+  <figcaption><em>Current Technical Stack (as of publication 20.10.25)</em></figcaption>
+</figure>
 
 ### Why These Technologies?
 
@@ -244,42 +124,16 @@ note bottom of DP : Auto-scaling\n& HTTPS
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 ### 1. Interactive Web Interface
 
 The hub provides a clean, responsive interface for browsing content:
 
-```plantuml
-@startuml
-!theme plain
-skinparam backgroundColor #FFFFFF
-skinparam roundcorner 10
-skinparam sequenceArrowThickness 2
-skinparam sequenceParticipant underline
-
-title User Journey Flow
-
-actor User
-box "LLM Knowledge Hub" #F0F8FF
-participant "Home" as H
-participant "Content" as C
-participant "Search" as S
-end box
-
-User -> H : Visit
-H --> User : Dashboard
-
-User -> C : Browse
-note right : • Guides\n• Q&A\n• Examples
-
-C --> User : Display Content
-
-User -> S : Query
-S --> User : Results
-
-@enduml
-```
+<figure>
+  <img src="../diagrams/architecture/user_journey_diagram.png" alt="Current User Journey (as of publication 20.10.25)" width="800">
+  <figcaption><em>CCurrent User Journey (as of publication 20.10.25)</em></figcaption>
+</figure>
 
 ### 2. Comprehensive Content Structure
 
@@ -297,7 +151,7 @@ S --> User : Results
 
 ---
 
-## 💡 Who Should Follow This Series?
+## Who Should Follow This Series?
 
 This series is designed for:
 
@@ -317,7 +171,7 @@ This series is designed for:
 
 ---
 
-## 🚀 Getting Started Today
+## Getting Started Today
 
 ### Quick Local Setup
 
@@ -345,7 +199,7 @@ Visit the live deployment: [https://llm-knowledge-hub.onrender.com/](https://llm
 
 ---
 
-## 🤝 Join the Journey
+## Join the Journey
 
 The LLM Knowledge Hub started as my personal project to organize AI knowledge, and now I'm opening it up to become a community resource. While I've laid the foundation with initial guides and examples, the real potential lies in what we can build together.
 
@@ -366,72 +220,16 @@ Here's how you can get involved:
 
 ---
 
-## 📊 Project Statistics and Growth
+## Project Vision and Growth Plan
 
-```plantuml
-@startuml
-!theme vibrant
-skinparam backgroundColor #F5F5F5
-
-title Project Growth Vision - Community Driven Roadmap
-
-rectangle "Current State" #E8F5E9 {
-  (Core Guides)
-  (Q&A Collections)
-  (Python Examples)
-  (Web Interface)
-}
-
-rectangle "Next Wave" #E3F2FD {
-  (Multi-language Examples)
-  (Video Tutorials)
-  (Interactive Playground)
-  (API Documentation)
-}
-
-rectangle "Expansion" #FFF3E0 {
-  (Community Forums)
-  (Learning Paths)
-  (Enterprise Patterns)
-  (Case Studies)
-}
-
-rectangle "Future Vision" #FCE4EC {
-  (AI-Powered Search)
-  (Personalized Learning)
-  (Real-time Collaboration)
-  (Industry Partnerships)
-}
-
-[Current State] ==> [Next Wave] : Community\nContributions
-[Next Wave] ==> [Expansion] : Growing\nAdoption
-[Expansion] ==> [Future Vision] : Maturity
-
-note right of [Current State]
-  **Launched October 2025**
-  ✓ 4 comprehensive guides
-  ✓ 100+ Q&A entries
-  ✓ Production examples
-end note
-
-note top of [Next Wave]
-  **Community Priorities**
-  Open for contributions
-  No fixed timeline
-end note
-
-note bottom of [Future Vision]
-  **Long-term Vision**
-  Evolving with community needs
-  Organic growth model
-end note
-
-@enduml
-```
+<figure>
+  <img src="../diagrams/architecture/project_growth_vision_diagram.png" alt="Project Vision & Growth Plan (as of publication 20.10.25)" width="800">
+  <figcaption><em>Project Vision & Growth Plan (as of publication 20.10.25)</em></figcaption>
+</figure>
 
 ---
 
-## 🎓 What You'll Learn
+## What You'll Learn
 
 By following this series, you'll gain:
 
@@ -443,7 +241,7 @@ By following this series, you'll gain:
 
 ---
 
-## 🔮 The Vision
+## The Vision
 
 The LLM Knowledge Hub aspires to become:
 
@@ -454,7 +252,7 @@ The LLM Knowledge Hub aspires to become:
 
 ---
 
-## 📈 Next Steps
+## Next Steps
 
 ### For Readers
 
@@ -472,7 +270,7 @@ The LLM Knowledge Hub aspires to become:
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 This project has been inspired by:
 
@@ -485,7 +283,7 @@ Special thanks to everyone who will contribute, provide feedback, and help shape
 
 ---
 
-## 📅 Series Schedule
+## Series Schedule
 
 New articles will be published weekly:
 
@@ -504,7 +302,7 @@ New articles will be published weekly:
 
 ---
 
-## 💬 Final Thoughts
+## Final Thoughts
 
 The field of AI is evolving at an unprecedented pace. As a software engineer navigating this landscape, I found myself constantly searching through scattered resources, outdated tutorials, and fragmented documentation. That's why I built the LLM Knowledge Hub - initially as my personal knowledge base, now open-sourced for everyone.
 
@@ -518,7 +316,7 @@ Whether you're just starting your AI journey or you're a seasoned practitioner r
 
 ---
 
-## 🔗 Connect and Follow
+## Connect and Follow
 
 - **GitHub Repository**: [github.com/OmarKAly22/llm-knowledge-hub](https://github.com/OmarKAly22/llm-knowledge-hub)
 - **Live Demo**: [llm-knowledge-hub.onrender.com](https://llm-knowledge-hub.onrender.com/)
