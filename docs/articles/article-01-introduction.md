@@ -132,7 +132,7 @@ The hub provides a clean, responsive interface for browsing content:
 
 <figure>
   <img src="../diagrams/architecture/user_journey_diagram.png" alt="Current User Journey (as of publication 20.10.25)" width="800">
-  <figcaption><em>CCurrent User Journey (as of publication 20.10.25)</em></figcaption>
+  <figcaption><em>Current User Journey (as of publication 20.10.25)</em></figcaption>
 </figure>
 
 ### 2. Comprehensive Content Structure

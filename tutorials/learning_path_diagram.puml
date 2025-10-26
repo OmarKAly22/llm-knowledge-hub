@@ -1,0 +1,149 @@
+@startuml Python LLM Tutorial Learning Path
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam activity {
+  BackgroundColor<<foundation>> #E3F2FD
+  BackgroundColor<<core>> #F3E5F5
+  BackgroundColor<<advanced>> #FFF3E0
+  BackgroundColor<<application>> #E8F5E9
+  BorderColor #666666
+  FontSize 12
+}
+
+title **Python LLM Development Learning Path**\n12-Week Tutorial Series
+
+start
+
+:Week 1: Python Basics for LLM Development<<foundation>>;
+note right
+  • Environment setup
+  • API key management
+  • First LLM calls
+  • Error handling basics
+end note
+
+:Week 2: Understanding LLM APIs<<foundation>>;
+note right
+  • OpenAI API deep dive
+  • Anthropic Claude API
+  • Streaming responses
+  • Token management
+end note
+
+:Week 3: Prompt Engineering with Python<<foundation>>;
+note right
+  • Template systems
+  • Dynamic prompts
+  • Few-shot examples
+  • Chain-of-thought
+end note
+
+if (Foundations Complete?) then (yes)
+  :Week 4: Building Your First AI Agent<<core>>;
+  note right
+    • ReAct pattern
+    • Tool calling
+    • Agent loops
+    • Decision making
+  end note
+else (no)
+  :Review Foundations;
+  detach
+endif
+
+:Week 5: RAG Systems in Python<<core>>;
+note right
+  • Vector databases
+  • Embeddings
+  • Document chunking
+  • Context injection
+end note
+
+:Week 6: Memory Management<<core>>;
+note right
+  • Conversation history
+  • Memory compression
+  • State persistence
+  • Context windows
+end note
+
+if (Core Patterns Complete?) then (yes)
+  :Week 7: Multi-Agent Systems<<advanced>>;
+  note right
+    • Sequential chains
+    • Parallel execution
+    • Agent communication
+    • Consensus patterns
+  end note
+else (no)
+  :Practice Core Patterns;
+  detach
+endif
+
+:Week 8: Tool Integration<<advanced>>;
+note right
+  • Custom tools
+  • API wrappers
+  • File operations
+  • Database connections
+end note
+
+:Week 9: Production Patterns<<advanced>>;
+note right
+  • Error handling
+  • Rate limiting
+  • Monitoring
+  • Cost optimization
+end note
+
+if (Ready for Applications?) then (yes)
+  :Week 10: Code Generation Agent<<application>>;
+  note right
+    • Code parsing
+    • Test generation
+    • Code review
+    • IDE integration
+  end note
+else (no)
+  :Master Advanced Topics;
+  detach
+endif
+
+:Week 11: Customer Service Bot<<application>>;
+note right
+  • Intent classification
+  • Context management
+  • Escalation handling
+  • Multi-turn dialogue
+end note
+
+:Week 12: Personal AI Assistant<<application>>;
+note right
+  • Task scheduling
+  • Email management
+  • Knowledge base
+  • Voice/multimodal
+end note
+
+:🎉 **Course Complete!**;
+note right
+  **You can now:**
+  ✓ Build production LLM apps
+  ✓ Create AI agents
+  ✓ Implement RAG systems
+  ✓ Deploy at scale
+end note
+
+stop
+
+legend right
+  |= Color |= Phase |= Weeks |
+  |<#E3F2FD> | Foundations | 1-3 |
+  |<#F3E5F5> | Core Patterns | 4-6 |
+  |<#FFF3E0> | Advanced | 7-9 |
+  |<#E8F5E9> | Applications | 10-12 |
+endlegend
+
+@enduml
