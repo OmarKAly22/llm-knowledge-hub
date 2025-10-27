@@ -35,10 +35,8 @@ This 12-part series takes you behind the scenes of building an educational AI pl
 
 ---
 
-### Coming Soon
-
-#### Part 2: The Complete Guide to Prompt Engineering
-*Publishing: October 27, 2025*
+#### [Part 2: The Complete Guide to Prompt Engineering](./articles/article-02-prompt-engineering.md)
+*Published: October 27, 2025*
 
 🎯 **What You'll Learn:**
 - Zero-shot to few-shot prompting
@@ -48,7 +46,10 @@ This 12-part series takes you behind the scenes of building an educational AI pl
 
 📊 **Topics Covered:** Prompt Engineering | CoT | Few-Shot Learning | Best Practices
 
+[Read Article →](./articles/article-02-prompt-engineering.md) | [Medium Version →]()
+
 ---
+#### coming soon
 
 #### Part 3: Building with Flask - The Technical Foundation
 *Publishing: November 3, 2025*
