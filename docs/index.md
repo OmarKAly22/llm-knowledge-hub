@@ -46,7 +46,7 @@ This 12-part series takes you behind the scenes of building an educational AI pl
 
 📊 **Topics Covered:** Prompt Engineering | CoT | Few-Shot Learning | Best Practices
 
-[Read Article →](./articles/article-02-prompt-engineering.md) | [Medium Version →]()
+[Read Article →](./articles/article-02-prompt-engineering.md) | [Medium Version →](https://medium.com/@omark.k.aly/the-complete-guide-to-prompt-engineering-mastering-ai-communication-26170d48e3d0)
 
 ---
 #### coming soon
