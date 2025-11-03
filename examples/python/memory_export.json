@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-11-02T21:36:55.478177",
+  "metrics": {
+    "total_interactions": 6,
+    "total_tokens_processed": 138,
+    "memories_created": 0,
+    "episodes_created": 0
+  },
+  "episodes": [
+    {
+      "id": "c4df3c9a-1fac-4382-91ce-c4d1d514fcc5",
+      "summary": "Episode with 5 interactions. Topics discussed: programming, machine learning. Key points: Question asked",
+      "interaction_count": 5
+    }
+  ],
+  "working_memory_stats": {
+    "session_id": "94790054-c524-4d00-8ec5-de756aa4dea3",
+    "interaction_count": 6,
+    "context_tokens": 294,
+    "stm_memories": 12,
+    "ltm_stats": {
+      "total_memories": 3,
+      "total_stored": 1,
+      "total_retrieved": 1,
+      "last_consolidation": null,
+      "database_size_estimate": "6KB"
+    }
+  },
+  "configuration": {
+    "max_context_tokens": 3000,
+    "stm_capacity": 15,
+    "ltm_persist_threshold": 0.7,
+    "episode_size": 5,
+    "consolidation_interval": 100
+  }
+}
