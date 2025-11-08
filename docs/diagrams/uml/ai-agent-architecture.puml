@@ -1,0 +1,105 @@
+@startuml AI Agent Architecture
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+title <size:16>AI Agent Architecture</size>\n<size:11>Autonomous Task Execution System</size>
+' Define actors
+actor "User" as user #0284c7
+' Agent Core Package
+package "Agent Core" #e0f2fe {
+    component "**Agent Controller**\n<<Orchestrator>>" as controller #3b82f6
+    component "Task Planner\n<<ReAct/CoT>>" as planner #2563eb
+    component "Memory System\n<<Short/Long Term>>" as memory #1e40af
+    component "Reflection Engine\n<<Self-Improvement>>" as reflection #1e3a8a
+}
+' Tools Package
+package "Tool Ecosystem" #dcfce7 {
+    component "Tool Registry" as registry #22c55e
+    
+    frame "Available Tools" #ecfccb {
+        component "Search Tool" as search #84cc16
+        component "Database Tool" as database #84cc16
+        component "Calculator Tool" as calc #84cc16
+        component "File Tool" as file #84cc16
+        component "API Tool" as api #84cc16
+    }
+    
+    component "Tool Selector\n<<Smart Router>>" as selector #16a34a
+}
+' Execution Package
+package "Execution Layer" #fef3c7 {
+    component "Execution Engine" as executor #f59e0b
+    component "Error Handler" as error #dc2626
+    component "Retry Manager" as retry #ea580c
+}
+' External Systems
+package "External Resources" #f3f4f6 {
+    database "Knowledge Base" as kb #6b7280
+    cloud "External APIs" as external #9ca3af
+    storage "File System" as fs #6b7280
+}
+' LLM Package
+package "LLM Layer" #fce7f3 {
+    component "Language Model\n<<GPT/Claude/Llama>>" as llm #ec4899
+}
+' Main Flow
+user --> controller : "Complex request"
+controller --> planner : "Create plan"
+planner --> llm : "Reasoning"
+llm --> planner : "Step-by-step plan"
+planner --> memory : "Retrieve context"
+memory --> planner : "Past experiences"
+controller --> selector : "Select tools for plan"
+selector --> registry : "Query available"
+registry --> selector : "Tool capabilities"
+controller --> executor : "Execute plan"
+executor --> search : "Step 1"
+executor --> database : "Step 2"
+executor --> calc : "Step 3"
+' Error handling
+executor --> error : "Handle failures"
+error --> retry : "Retry logic"
+retry --> executor : "New attempt"
+' Tool interactions with external systems
+search --> external : "Web search"
+database --> kb : "Query data"
+file --> fs : "Read/Write"
+api --> external : "API calls"
+' Reflection loop
+executor --> reflection : "Execution results"
+reflection --> memory : "Store learnings"
+reflection --> controller : "Improvements"
+' Annotations
+note right of controller
+  **Controller responsibilities:**
+  • Orchestrates execution
+  • Manages state
+  • Monitors progress
+  • Makes decisions
+end note
+note left of planner
+  **Planning strategies:**
+  • ReAct (Reason + Act)
+  • Chain of Thought
+  • Tree of Thoughts
+  • Self-Ask
+end note
+note bottom of executor
+  **Execution features:**
+  • Parallel execution
+  • Dependency management
+  • Resource optimization
+  • Progress tracking
+end note
+note right of reflection
+  **Learning from:**
+  • Successful patterns
+  • Failed attempts
+  • Time taken
+  • Resource usage
+end note
+@enduml

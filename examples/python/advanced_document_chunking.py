@@ -3,32 +3,36 @@ from typing import List, Dict, Any
 from dataclasses import dataclass
 import numpy as np
 
+
 @dataclass
 class ChunkResult:
     """Result of document chunking."""
+
     chunk_id: str
     content: str
     start_pos: int
     end_pos: int
     metadata: Dict[str, Any]
-    
+
     def __str__(self):
-        preview = self.content[:100] + "..." if len(self.content) > 100 else self.content
+        preview = (
+            self.content[:100] + "..." if len(self.content) > 100 else self.content
+        )
         return f"Chunk[{self.chunk_id}]: {preview}"
+
 
 class SmartChunker:
     """
     Advanced document chunker with multiple strategies.
     This implementation actually chunks text and produces output.
     """
-    
-    def __init__(self, 
-                 chunk_size: int = 500,
-                 overlap: int = 50,
-                 strategy: str = "semantic"):
+
+    def __init__(
+        self, chunk_size: int = 500, overlap: int = 50, strategy: str = "semantic"
+    ):
         """
         Initialize chunker.
-        
+
         Args:
             chunk_size: Target size for chunks in characters
             overlap: Overlap between chunks
@@ -41,20 +45,20 @@ class SmartChunker:
         print(f"Strategy: {strategy}")
         print(f"Chunk size: {chunk_size} chars")
         print(f"Overlap: {overlap} chars")
-    
+
     def chunk_text(self, text: str, doc_id: str = "doc") -> List[ChunkResult]:
         """
         Chunk text using the selected strategy.
-        
+
         Args:
             text: Text to chunk
             doc_id: Document identifier
-        
+
         Returns:
             List of chunks with metadata
         """
         print(f"\nChunking document '{doc_id}' ({len(text)} chars)")
-        
+
         if self.strategy == "fixed":
             chunks = self._fixed_chunking(text)
         elif self.strategy == "sentence":
@@ -63,7 +67,7 @@ class SmartChunker:
             chunks = self._semantic_chunking(text)
         else:
             chunks = self._fixed_chunking(text)
-        
+
         # Create ChunkResult objects
         results = []
         for i, (chunk_text, start, end) in enumerate(chunks):
@@ -76,55 +80,55 @@ class SmartChunker:
                     "strategy": self.strategy,
                     "chunk_index": i,
                     "total_chunks": len(chunks),
-                    "parent_doc": doc_id
-                }
+                    "parent_doc": doc_id,
+                },
             )
             results.append(chunk_result)
-        
+
         print(f"Created {len(results)} chunks")
         return results
-    
+
     def _fixed_chunking(self, text: str) -> List[tuple]:
         """Fixed-size chunking with overlap."""
         chunks = []
         start = 0
-        
+
         while start < len(text):
             # Calculate end position
             end = min(start + self.chunk_size, len(text))
-            
+
             # Extract chunk
             chunk = text[start:end]
             chunks.append((chunk, start, end))
-            
+
             # Move start position (considering overlap)
             start += self.chunk_size - self.overlap
-            
+
             # Avoid tiny final chunks
             if len(text) - start < self.overlap:
                 break
-        
+
         return chunks
-    
+
     def _sentence_chunking(self, text: str) -> List[tuple]:
         """Chunk by sentences, respecting size limits."""
         # Split into sentences
-        sentences = re.split(r'(?<=[.!?])\s+', text)
-        
+        sentences = re.split(r"(?<=[.!?])\s+", text)
+
         chunks = []
         current_chunk = []
         current_size = 0
         chunk_start = 0
-        
+
         for sentence in sentences:
             sentence_size = len(sentence)
-            
+
             # Check if adding sentence exceeds chunk size
             if current_size + sentence_size > self.chunk_size and current_chunk:
                 # Save current chunk
-                chunk_text = ' '.join(current_chunk)
+                chunk_text = " ".join(current_chunk)
                 chunks.append((chunk_text, chunk_start, chunk_start + len(chunk_text)))
-                
+
                 # Start new chunk with overlap (keep last sentence)
                 if self.overlap > 0 and current_chunk:
                     chunk_start = chunk_start + len(chunk_text) - len(current_chunk[-1])
@@ -134,37 +138,37 @@ class SmartChunker:
                     chunk_start = chunk_start + len(chunk_text) + 1
                     current_chunk = []
                     current_size = 0
-            
+
             current_chunk.append(sentence)
             current_size += sentence_size + 1  # +1 for space
-        
+
         # Add final chunk
         if current_chunk:
-            chunk_text = ' '.join(current_chunk)
+            chunk_text = " ".join(current_chunk)
             chunks.append((chunk_text, chunk_start, chunk_start + len(chunk_text)))
-        
+
         return chunks
-    
+
     def _semantic_chunking(self, text: str) -> List[tuple]:
         """Chunk by semantic boundaries (paragraphs, sections)."""
         chunks = []
-        
+
         # Split by double newlines (paragraphs)
-        paragraphs = text.split('\n\n')
-        
+        paragraphs = text.split("\n\n")
+
         current_chunk = []
         current_size = 0
         chunk_start = 0
         text_position = 0
-        
+
         for para in paragraphs:
             para_size = len(para)
-            
+
             if current_size + para_size > self.chunk_size and current_chunk:
                 # Save current chunk
-                chunk_text = '\n\n'.join(current_chunk)
+                chunk_text = "\n\n".join(current_chunk)
                 chunks.append((chunk_text, chunk_start, text_position - 2))
-                
+
                 # Start new chunk
                 chunk_start = text_position
                 current_chunk = [para]
@@ -172,37 +176,38 @@ class SmartChunker:
             else:
                 current_chunk.append(para)
                 current_size += para_size + 2  # +2 for \n\n
-            
+
             text_position += para_size + 2
-        
+
         # Add final chunk
         if current_chunk:
-            chunk_text = '\n\n'.join(current_chunk)
+            chunk_text = "\n\n".join(current_chunk)
             chunks.append((chunk_text, chunk_start, text_position))
-        
+
         # If no paragraphs found, fall back to sentence chunking
         if len(chunks) <= 1:
             return self._sentence_chunking(text)
-        
+
         return chunks
-    
+
     def analyze_chunks(self, chunks: List[ChunkResult]) -> Dict[str, Any]:
         """Analyze chunking results for quality metrics."""
         if not chunks:
             return {}
-        
+
         sizes = [len(chunk.content) for chunk in chunks]
-        
+
         analysis = {
-            'total_chunks': len(chunks),
-            'avg_size': sum(sizes) / len(sizes),
-            'min_size': min(sizes),
-            'max_size': max(sizes),
-            'size_variance': np.std(sizes) if len(sizes) > 1 else 0,
-            'total_chars': sum(sizes)
+            "total_chunks": len(chunks),
+            "avg_size": sum(sizes) / len(sizes),
+            "min_size": min(sizes),
+            "max_size": max(sizes),
+            "size_variance": np.std(sizes) if len(sizes) > 1 else 0,
+            "total_chars": sum(sizes),
         }
-        
+
         return analysis
+
 
 # ============= DEMONSTRATION =============
 print("=" * 60)
@@ -241,15 +246,11 @@ for strategy in strategies:
     print(f"\n{'='*60}")
     print(f"Testing {strategy.upper()} chunking strategy")
     print(f"{'='*60}")
-    
-    chunker = SmartChunker(
-        chunk_size=400,
-        overlap=50,
-        strategy=strategy
-    )
-    
+
+    chunker = SmartChunker(chunk_size=400, overlap=50, strategy=strategy)
+
     chunks = chunker.chunk_text(sample_text, doc_id=f"{strategy}_doc")
-    
+
     # Show first few chunks
     print(f"\nChunk Results:")
     for i, chunk in enumerate(chunks[:3]):
@@ -257,10 +258,10 @@ for strategy in strategies:
         print(f"  Position: [{chunk.start_pos}:{chunk.end_pos}]")
         print(f"  Size: {len(chunk.content)} chars")
         print(f"  Preview: {chunk.content[:150]}...")
-    
+
     if len(chunks) > 3:
         print(f"\n  ... and {len(chunks) - 3} more chunks")
-    
+
     # Analyze chunks
     analysis = chunker.analyze_chunks(chunks)
     print(f"\nChunk Analysis:")
