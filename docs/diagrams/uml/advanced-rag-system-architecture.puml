@@ -1,0 +1,106 @@
+@startuml Modern RAG Architecture 2025
+!theme blueprint
+skinparam backgroundColor #1a1a2e
+
+title Advanced RAG System Architecture
+
+actor User
+participant "RAG Orchestrator" as RAG
+participant "Query Router" as QR
+participant "Query Processor" as QP
+database "Vector Store" as VS
+database "Knowledge Graph" as KG
+database "Cache Layer" as Cache
+participant "Hybrid Retriever" as HR
+participant "Reranker" as RR
+participant "Agent Controller" as AC
+participant "LLM Router" as LLMR
+participant "Guardrails" as GR
+participant "Citation Engine" as CE
+
+User -> RAG: Query + Context + Modality
+
+== Query Analysis Phase ==
+RAG -> Cache: Check cache
+alt Cache Hit
+  Cache -> RAG: Cached response
+  RAG -> User: Response + Sources
+else Cache Miss
+  RAG -> QR: Route query
+  QR -> QR: Classify query type\n(factual/analytical/procedural)
+  QR -> QP: Query + Strategy
+end
+
+== Query Processing ==
+alt Multi-modal Query
+  QP -> QP: Extract text/image/audio/video
+  QP -> QP: Generate unified embeddings\n(CLIP/ImageBind)
+else Text Query
+  QP -> QP: Query decomposition
+  QP -> QP: Query expansion (HyDE)
+  QP -> QP: Generate embeddings\n(BGE-M3/E5-v2)
+end
+
+== Retrieval Phase ==
+QP -> HR: Processed query
+HR -> VS: Dense vector search
+HR -> VS: Sparse search (BM25)
+HR -> KG: Graph traversal\n(2-hop reasoning)
+
+note over VS: Native hybrid search\n(Qdrant/Weaviate/Pinecone)\nwith metadata filtering
+
+VS --> HR: Top-K dense results
+VS --> HR: Top-K sparse results  
+KG --> HR: Graph connections
+
+HR -> HR: Reciprocal Rank Fusion\n(RRF scoring)
+
+== Reranking Phase ==
+HR -> RR: Merged candidates
+RR -> RR: Cross-encoder scoring\n(ColBERT v2)
+RR -> RR: Diversity optimization (MMR)
+RR -> AC: Reranked documents
+
+== Agentic Decision ==
+AC -> AC: Evaluate sufficiency
+alt Needs more info
+  AC -> QP: Generate follow-up query
+  QP -> HR: Additional retrieval
+else Sufficient
+  AC -> LLMR: Documents + Query
+end
+
+== Generation Phase ==
+LLMR -> LLMR: Select model\n(GPT-4o/Claude-3.5/Gemini-1.5)
+LLMR -> GR: Pre-generation check
+GR -> GR: PII detection\nCompliance (GDPR/HIPAA)\nToxicity check
+GR -> LLMR: Approved content
+
+LLMR -> LLMR: Generate response\nwith streaming
+
+== Post-Processing ==
+LLMR -> CE: Response + Sources
+CE -> CE: Extract claims\nMatch to sources\nGenerate citations
+CE -> GR: Final check
+GR -> GR: Fact verification\nHallucination detection
+GR -> Cache: Store result
+GR -> RAG: Final response
+
+RAG -> RAG: Telemetry & Metrics
+RAG -> User: Response + Citations + Confidence
+
+== Async Feedback Loop ==
+User --> RAG: Feedback signal
+RAG --> AC: Update routing strategy
+
+note over KG: GraphRAG with\nentity resolution\nand relationship mining
+
+note over Cache: Redis/Memcached\nwith TTL and\nsemantic similarity
+
+note over AC: Self-RAG capable\nof iterative retrieval
+
+note over CE: Automatic citation\nwith claim attribution\nand source verification
+
+note right of LLMR: Multi-LLM routing\nbased on query type,\ncost, and latency SLA
+
+@enduml

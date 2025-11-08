@@ -1,0 +1,122 @@
+@startuml MCP Architecture Overview
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam shadowing true
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+
+title <size:16>Model Context Protocol - Architecture Overview</size>\n<size:11>Universal AI Connector Standard</size>
+
+' Define components with better visual hierarchy
+package "User Layer" #e0f2fe {
+    actor "End User" as user #0284c7
+}
+
+package "AI Application Layer" #dbeafe {
+    component "AI Assistant\n(Claude/GPT/etc)" as ai #3b82f6
+    component "MCP Client\n<<SDK>>" as client #2563eb
+}
+
+package "MCP Protocol Layer" #f0f9ff {
+    component "Transport\n(stdio/HTTP/WS)" as transport #60a5fa
+    component "JSON-RPC 2.0\nProtocol" as jsonrpc #3b82f6
+    
+    frame "Core Capabilities" #e0f2fe {
+        component "Tool Registry" as tools #0ea5e9
+        component "Resource Manager" as resources #0891b2
+        component "Session Handler" as session #0e7490
+    }
+}
+
+package "Your Implementation" #dcfce7 {
+    component "**MCP Server**\n<<Your Code>>" as server #16a34a
+    
+    frame "Tool Implementations" #ecfccb {
+        component "get_sales_data()" as tool1 #84cc16
+        component "analyze_customers()" as tool2 #84cc16
+        component "file_operations()" as tool3 #84cc16
+    }
+}
+
+package "Data Sources" #fef3c7 {
+    database "SQL Database" as db #f59e0b
+    collections "REST APIs" as api #eab308
+    storage "File System" as files #ca8a04
+}
+
+' Developer interaction
+actor "Developer" as dev #6b7280
+
+' Main flow connections
+user ..> ai : "Natural language\nquery"
+ai <--> client : "Function calls"
+client <--> transport : "MCP messages"
+transport <--> jsonrpc : "JSON-RPC"
+jsonrpc <--> server : "Tool invocation"
+
+' Protocol layer connections
+jsonrpc --> tools : "Register"
+jsonrpc --> resources : "Manage"
+jsonrpc --> session : "Track"
+
+' Server to tools
+server --> tool1 : "Execute"
+server --> tool2 : "Execute"
+server --> tool3 : "Execute"
+
+' Tools to data sources
+tool1 --> db : "Query"
+tool2 --> db : "Analyze"
+tool3 --> files : "Read/Write"
+tool2 --> api : "Fetch"
+
+' Developer setup
+dev ..> server : "Implement tools"
+dev ..> tools : "Define schemas"
+
+' Annotations with better positioning
+note top of server
+  **Your MCP Server:**
+  • Implements business logic
+  • Handles authentication
+  • Manages connections
+  • Provides error handling
+end note
+
+note bottom of client
+  **Auto-discovery:**
+  LLM automatically learns
+  available tools via
+  MCP protocol
+end note
+
+note right of jsonrpc
+  **Standard Protocol:**
+  • Request/Response
+  • Error codes
+  • Batch operations
+  • Notifications
+end note
+
+note bottom of db
+  **Any data source:**
+  PostgreSQL, MongoDB,
+  S3, Elasticsearch,
+  Redis, etc.
+end note
+
+' Example flow annotation
+note as N1
+  **Example Flow:**
+  1. User asks: "What were Q4 sales?"
+  2. AI recognizes need for data
+  3. MCP Client calls get_sales_data()
+  4. Server queries database
+  5. Results returned through protocol
+  6. AI formats response for user
+end note
+
+@enduml
