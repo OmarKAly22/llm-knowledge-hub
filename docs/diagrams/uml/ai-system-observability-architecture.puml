@@ -1,0 +1,168 @@
+@startuml AI Observability Architecture
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+
+title <size:16>AI System Observability Architecture</size>\n<size:11>Complete Monitoring & Analytics Pipeline</size>
+
+' Define actors
+actor "DevOps" as devops #10b981
+actor "Data Scientist" as scientist #6b7280
+actor "Business" as business #0284c7
+
+' Data Collection Layer
+package "Data Collection" #e0f2fe {
+    component "**Metrics Collector**\n<<Time Series>>" as metrics #3b82f6
+    component "Trace Collector\n<<Distributed>>" as traces #2563eb
+    component "Log Aggregator\n<<Centralized>>" as logs #1e40af
+    component "Event Stream\n<<Real-time>>" as events #1e3a8a
+}
+
+' AI-Specific Monitoring
+package "AI Monitoring" #dcfce7 {
+    component "**Model Monitor**\n<<Performance>>" as model_mon #22c55e
+    
+    frame "AI Metrics" #ecfccb {
+        component "Token Counter\n<<Usage/Cost>>" as tokens #84cc16
+        component "Quality Scorer\n<<Accuracy>>" as quality #65a30d
+        component "Drift Detector\n<<Changes>>" as drift #4d7c0f
+        component "Hallucination Detector" as hallucination #365314
+    }
+}
+
+' Infrastructure Monitoring
+package "Infrastructure" #fef3c7 {
+    component "**Resource Monitor**\n<<System>>" as resource #f59e0b
+    component "GPU Monitor\n<<Utilization>>" as gpu #eab308
+    component "Memory Tracker\n<<Usage>>" as memory #ca8a04
+    component "Network Monitor\n<<Latency>>" as network #a16207
+}
+
+' Processing & Storage
+package "Data Processing" #fce7f3 {
+    component "**Stream Processor**\n<<Real-time>>" as processor #ec4899
+    database "Time Series DB\n<<Metrics>>" as tsdb #db2777
+    database "Log Storage\n<<Searchable>>" as logstore #be185d
+    database "Trace Storage\n<<Distributed>>" as tracestore #9f1239
+}
+
+' Analysis & Visualization
+package "Analytics" #f3e8ff {
+    component "**Analytics Engine**" as analytics #8b5cf6
+    component "Anomaly Detector\n<<ML-based>>" as anomaly #7c3aed
+    component "Cost Analyzer" as cost #6d28d9
+    component "Performance Analyzer" as perf #5b21b6
+}
+
+' Alerting & Response
+package "Alerting" #fee2e2 {
+    component "**Alert Manager**" as alertmgr #ef4444
+    component "Threshold Alerts" as threshold #dc2626
+    component "Anomaly Alerts" as anomaly_alert #b91c1c
+    component "Cost Alerts" as cost_alert #991b1b
+}
+
+' Dashboards
+package "Visualization" #f3f4f6 {
+    component "**Dashboard Engine**" as dashboard #9ca3af
+    component "Operational Dashboard" as ops_dash #6b7280
+    component "Business Dashboard" as biz_dash #4b5563
+    component "Technical Dashboard" as tech_dash #374151
+}
+
+' Data flow - Collection
+metrics --> processor : Metrics
+traces --> processor : Traces
+logs --> processor : Logs
+events --> processor : Events
+
+' AI monitoring flow
+model_mon --> tokens : Track usage
+model_mon --> quality : Score quality
+model_mon --> drift : Detect drift
+model_mon --> hallucination : Check accuracy
+
+' Infrastructure monitoring
+resource --> gpu : GPU metrics
+resource --> memory : Memory stats
+resource --> network : Network data
+
+
+' Infrastructure to processing flow
+resource --> processor : System metrics
+gpu --> processor : GPU metrics  
+memory --> processor : Memory metrics
+network --> processor : Network metrics
+
+' Processing flow
+processor --> tsdb : Store metrics
+processor --> logstore : Store logs
+processor --> tracestore : Store traces
+
+' Analytics flow
+tsdb --> analytics : Analyze
+logstore --> analytics : Search
+tracestore --> analytics : Correlate
+
+analytics --> anomaly : Detect issues
+analytics --> cost : Calculate costs
+analytics --> perf : Analyze performance
+
+' Alerting flow
+anomaly --> alertmgr : Anomalies
+threshold --> alertmgr : Violations
+cost_alert --> alertmgr : Budget alerts
+
+' Dashboard flow
+analytics --> dashboard : Visualize
+dashboard --> ops_dash : Operations
+dashboard --> biz_dash : Business
+dashboard --> tech_dash : Technical
+
+' User access
+devops --> ops_dash : Monitor
+scientist --> tech_dash : Analyze
+business --> biz_dash : Review
+
+' Alert notifications
+alertmgr --> devops : Page
+alertmgr --> scientist : Notify
+
+' Annotations
+note right of tokens
+  **Token metrics:**
+  • Input tokens
+  • Output tokens
+  • Cost per request
+  • Model breakdown
+end note
+
+note bottom of quality
+  **Quality metrics:**
+  • Relevance score
+  • Coherence score
+  • Factuality check
+  • Sentiment analysis
+end note
+
+note left of anomaly
+  **Anomaly detection:**
+  • Latency spikes
+  • Error patterns
+  • Usage anomalies
+  • Cost anomalies
+end note
+
+note right of dashboard
+  **Dashboard types:**
+  • Real-time metrics
+  • Historical trends
+  • Comparative analysis
+  • Predictive insights
+end note
+
+@enduml

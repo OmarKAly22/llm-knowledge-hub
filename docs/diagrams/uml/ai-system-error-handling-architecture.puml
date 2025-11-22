@@ -1,0 +1,122 @@
+@startuml Error Handling Architecture
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+title <size:16>AI System Error Handling Architecture</size>\n<size:11>Multi-Layer Resilience Strategy</size>
+' Define actors
+actor "User" as user #0284c7
+actor "Developer" as dev #6b7280
+actor "SRE/Ops" as ops #10b981
+' Error Detection Layer
+package "Error Detection Layer" #fee2e2 {
+    component "**Error Interceptor**\n<<Middleware>>" as interceptor #ef4444
+    component "Type Validator" as validator #dc2626
+    component "Response Checker" as checker #b91c1c
+    component "Anomaly Detector" as anomaly #991b1b
+}
+' Error Classification
+package "Error Classification" #fef3c7 {
+    component "**Error Classifier**\n<<AI-Powered>>" as classifier #f59e0b
+    
+    frame "Error Types" #fef9c3 {
+        component "Transient\n(Retry)" as transient #fbbf24
+        component "Permanent\n(Fail)" as permanent #f97316
+        component "Degradable\n(Fallback)" as degradable #fb923c
+        component "Critical\n(Alert)" as critical #ea580c
+    }
+}
+' Recovery Strategies
+package "Recovery Engine" #dcfce7 {
+    component "**Recovery Orchestrator**" as orchestrator #22c55e
+    
+    frame "Recovery Strategies" #ecfccb {
+        component "Retry Manager\n<<Exponential>>" as retry #84cc16
+        component "Circuit Breaker\n<<Protection>>" as breaker #65a30d
+        component "Fallback Handler\n<<Graceful>>" as fallback #4d7c0f
+        component "Compensator\n<<Rollback>>" as compensator #365314
+    }
+}
+' Monitoring & Learning
+package "Observability & Learning" #e0f2fe {
+    database "Error Store\n<<Metrics>>" as errordb #3b82f6
+    component "Pattern Analyzer" as patterns #2563eb
+    component "Alert Manager" as alerts #1e40af
+    component "Learning Engine" as learning #1e3a8a
+}
+' External Systems
+package "AI Components" #fce7f3 {
+    cloud "LLM Services" as llm #ec4899
+    collections "Vector DBs" as vectors #db2777
+    component "ML Models" as models #be185d
+}
+' Error Flow
+user --> interceptor : Request
+interceptor --> validator : Validate input
+validator --> llm : Process
+llm --> checker : Response
+checker --> anomaly : Check anomalies
+' Error detection to classification
+interceptor --> classifier : Error detected
+validator --> classifier : Validation error
+checker --> classifier : Response error
+anomaly --> classifier : Anomaly detected
+' Classification to strategies
+classifier --> transient
+classifier --> permanent
+classifier --> degradable
+classifier --> critical
+' Recovery strategies
+transient --> retry : Retry with backoff
+permanent --> fallback : Use fallback
+degradable --> fallback : Degrade gracefully
+critical --> alerts : Page on-call
+' Recovery execution
+retry --> orchestrator : Execute retry
+breaker --> orchestrator : Circuit control
+fallback --> orchestrator : Fallback path
+compensator --> orchestrator : Rollback
+' Learning flow
+orchestrator --> errordb : Log errors
+errordb --> patterns : Analyze patterns
+patterns --> learning : Train models
+learning --> classifier : Improve classification
+' Ops monitoring
+errordb --> alerts : Threshold breach
+alerts --> ops : Notify
+patterns --> dev : Insights
+' Recovery to user
+orchestrator --> user : Handled response
+' Annotations
+note right of interceptor
+  **Catches all errors:**
+  • Exceptions
+  • Timeouts
+  • Invalid responses
+  • Network failures
+end note
+note bottom of classifier
+  **Smart classification:**
+  • Historical data
+  • Error patterns
+  • Context awareness
+  • Severity scoring
+end note
+note left of retry
+  **Retry strategies:**
+  • Fixed delay
+  • Exponential backoff
+  • Jittered retries
+  • Adaptive timing
+end note
+note right of learning
+  **Continuous improvement:**
+  • Error prediction
+  • Pattern detection
+  • Root cause analysis
+  • Preventive measures
+end note
+@enduml

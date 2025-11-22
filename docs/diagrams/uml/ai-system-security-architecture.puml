@@ -1,0 +1,144 @@
+@startuml AI Security Architecture
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+
+title <size:16>AI System Security Architecture</size>\n<size:11>Multi-Layer Defense Strategy</size>
+
+' Define actors
+actor "User" as user #0284c7
+actor "Attacker" as attacker #ef4444
+actor "Security Team" as security #10b981
+
+' Input Security Layer
+package "Input Security" #fee2e2 {
+    component "**Input Validator**\n<<First Defense>>" as validator #ef4444
+    component "Prompt Scanner\n<<Injection Detection>>" as scanner #dc2626
+    component "Rate Limiter\n<<DDoS Protection>>" as ratelimit #b91c1c
+    component "Content Filter\n<<PII/Sensitive>>" as filter #991b1b
+}
+
+' Authentication & Authorization
+package "Access Control" #e0f2fe {
+    component "**Auth Gateway**\n<<Identity>>" as auth #3b82f6
+    database "User Store\n<<Encrypted>>" as userdb #2563eb
+    component "RBAC Engine\n<<Permissions>>" as rbac #1e40af
+    component "API Key Manager" as apikeys #1e3a8a
+}
+
+' Processing Security
+package "Secure Processing" #dcfce7 {
+    component "**Secure Executor**\n<<Sandboxed>>" as executor #22c55e
+    
+    frame "Security Controls" #ecfccb {
+        component "Data Encryption" as encrypt #84cc16
+        component "Model Isolation" as isolate #65a30d
+        component "Token Limiter" as tokens #4d7c0f
+        component "Context Sanitizer" as sanitize #365314
+    }
+}
+
+' Output Security
+package "Output Protection" #fef3c7 {
+    component "**Output Filter**\n<<Response Guard>>" as outfilter #f59e0b
+    component "PII Detector" as pii #eab308
+    component "Hallucination Check" as hallucination #ca8a04
+    component "Compliance Filter" as compliance #a16207
+}
+
+' Monitoring & Audit
+package "Security Monitoring" #fce7f3 {
+    database "Audit Log\n<<Immutable>>" as auditlog #ec4899
+    component "Anomaly Detector" as anomaly #db2777
+    component "Threat Intelligence" as threat #be185d
+    component "SIEM Integration" as siem #9f1239
+}
+
+' Data Protection
+package "Data Security" #f3f4f6 {
+    database "Encrypted Storage" as storage #9ca3af
+    component "Key Management\n<<HSM>>" as kms #6b7280
+    component "Data Masking" as masking #4b5563
+    component "Privacy Vault" as vault #374151
+}
+
+' Attack flows (red paths)
+attacker --> validator : Injection attempt
+attacker --> ratelimit : DDoS attack
+attacker --> auth : Unauthorized access
+
+' Normal user flow
+user --> auth : Authenticate
+auth --> userdb : Verify
+userdb --> rbac : Get permissions
+rbac --> validator : Authorized request
+
+' Input processing
+validator --> scanner : Scan prompt
+scanner --> filter : Check content
+filter --> executor : Clean input
+
+' Secure processing
+executor --> encrypt : Encrypt data
+encrypt --> isolate : Isolated execution
+isolate --> tokens : Limit tokens
+tokens --> sanitize : Clean context
+
+' Output flow
+executor --> outfilter : Filter response
+outfilter --> pii : Check PII
+pii --> hallucination : Verify accuracy
+hallucination --> compliance : Ensure compliance
+compliance --> user : Safe response
+
+' Security monitoring
+validator --> auditlog : Log attempts
+scanner --> anomaly : Detect patterns
+anomaly --> threat : Check threats
+threat --> siem : Alert
+siem --> security : Notify
+
+' Data protection
+executor --> storage : Store encrypted
+storage --> kms : Key management
+kms --> masking : Mask sensitive
+masking --> vault : Secure storage
+
+' Annotations
+note right of validator
+  **Input validation:**
+  • SQL injection
+  • Command injection
+  • Prompt injection
+  • XSS attempts
+end note
+
+note bottom of executor
+  **Sandboxing:**
+  • Resource limits
+  • Network isolation
+  • File system restrictions
+  • Memory protection
+end note
+
+note left of outfilter
+  **Output filtering:**
+  • Remove secrets
+  • Block harmful content
+  • Ensure accuracy
+  • Maintain compliance
+end note
+
+note right of anomaly
+  **Detection patterns:**
+  • Unusual queries
+  • Access patterns
+  • Data exfiltration
+  • Privilege escalation
+end note
+
+@enduml

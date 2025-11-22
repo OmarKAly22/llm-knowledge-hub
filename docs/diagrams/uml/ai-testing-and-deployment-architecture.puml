@@ -1,0 +1,180 @@
+@startuml AI Testing and Deployment Architecture
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+
+title <size:16>AI Testing & Deployment Architecture</size>\n<size:11>Complete Production Pipeline</size>
+
+' Define actors
+actor "Developer" as dev #6b7280
+actor "QA Engineer" as qa #10b981
+actor "End User" as user #0284c7
+actor "SRE" as sre #ef4444
+
+' Testing Pipeline
+package "Testing Pipeline" #e0f2fe {
+    component "**Test Orchestrator**\n<<Controller>>" as orchestrator #3b82f6
+    
+    frame "Testing Levels" #dbeafe {
+        component "Unit Tests\n<<Components>>" as unit #2563eb
+        component "Integration Tests\n<<Services>>" as integration #1e40af
+        component "E2E Tests\n<<Workflows>>" as e2e #1e3a8a
+        component "Performance Tests\n<<Load/Stress>>" as perf_test #1552a7
+    }
+    
+    frame "AI-Specific Tests" #c7d2fe {
+        component "Prompt Tests\n<<Variations>>" as prompt_test #6366f1
+        component "Quality Tests\n<<Accuracy>>" as quality_test #4f46e5
+        component "Safety Tests\n<<Guardrails>>" as safety_test #4338ca
+        component "Regression Tests\n<<Drift>>" as regression #3730a3
+    }
+}
+
+' Deployment Pipeline
+package "Deployment Pipeline" #dcfce7 {
+    component "**Deployment Manager**\n<<Orchestration>>" as deploy_mgr #22c55e
+    
+    frame "Deployment Strategies" #ecfccb {
+        component "Blue-Green\n<<Instant Switch>>" as bluegreen #84cc16
+        component "Canary\n<<Gradual>>" as canary #65a30d
+        component "A/B Testing\n<<Comparison>>" as ab_test #4d7c0f
+        component "Shadow Mode\n<<Parallel>>" as shadow #365314
+    }
+}
+
+' Model Registry
+package "Model Management" #fef3c7 {
+    database "**Model Registry**\n<<Versioned>>" as registry #f59e0b
+    component "Model Validator" as validator #eab308
+    component "Version Controller" as version #ca8a04
+    component "Rollback Manager" as rollback #a16207
+}
+
+' Infrastructure
+package "Infrastructure" #fce7f3 {
+    component "**Load Balancer**\n<<Traffic Router>>" as lb #ec4899
+    
+    frame "Environments" #fdf2f8 {
+        component "Development\n<<Sandbox>>" as dev_env #db2777
+        component "Staging\n<<Pre-prod>>" as staging #be185d
+        component "Production\n<<Live>>" as prod #9f1239
+        component "DR Site\n<<Backup>>" as dr #831843
+    }
+}
+
+' Monitoring & Feedback
+package "Production Monitoring" #fee2e2 {
+    component "**Health Monitor**" as health #ef4444
+    component "Performance Monitor" as perf_mon #dc2626
+    component "Quality Monitor" as quality_mon #b91c1c
+    component "User Feedback" as feedback #991b1b
+}
+
+' CI/CD Pipeline
+package "CI/CD" #f3f4f6 {
+    component "**Pipeline Controller**" as pipeline #9ca3af
+    component "Build System" as build #6b7280
+    component "Test Runner" as test_runner #4b5563
+    component "Deploy Agent" as deploy_agent #374151
+}
+
+' Developer flow
+dev --> unit : Write tests
+dev --> build : Commit code
+
+' Testing flow
+orchestrator --> unit : Run units
+unit --> integration : Pass
+integration --> e2e : Pass
+e2e --> perf_test : Pass
+
+orchestrator --> prompt_test : Test prompts
+prompt_test --> quality_test : Check quality
+quality_test --> safety_test : Verify safety
+safety_test --> regression : Check regression
+
+' CI/CD flow
+build --> pipeline : Trigger
+pipeline --> test_runner : Execute tests
+test_runner --> orchestrator : Run suite
+orchestrator --> deploy_agent : Tests pass
+
+' Deployment flow
+deploy_agent --> deploy_mgr : Deploy request
+deploy_mgr --> validator : Validate model
+validator --> registry : Store model
+registry --> version : Version control
+
+' Deployment strategies
+deploy_mgr --> bluegreen : Strategy 1
+deploy_mgr --> canary : Strategy 2
+deploy_mgr --> ab_test : Strategy 3
+deploy_mgr --> shadow : Strategy 4
+
+' Environment promotion
+dev_env --> staging : Promote
+staging --> prod : Release
+prod --> dr : Replicate
+
+' Traffic routing
+lb --> prod : Main traffic
+lb --> canary : Test traffic
+lb --> shadow : Duplicate traffic
+
+' Monitoring feedback
+prod --> health : Health checks
+prod --> perf_mon : Performance
+prod --> quality_mon : Quality
+user --> feedback : User reports
+
+' Rollback flow
+quality_mon --> rollback : Quality issue
+perf_mon --> rollback : Performance issue
+health --> rollback : Health issue
+rollback --> registry : Previous version
+registry --> prod : Deploy rollback
+
+' Actor interactions
+qa --> orchestrator : Test execution
+sre --> deploy_mgr : Deploy approval
+sre --> health : Monitor
+user --> lb : Requests
+
+' Annotations
+note right of unit
+  **Unit test coverage:**
+  • Input validation
+  • Token counting
+  • Cost calculation
+  • Error handling
+end note
+
+note bottom of prompt_test
+  **Prompt testing:**
+  • Edge cases
+  • Injection attempts
+  • Multi-language
+  • Token limits
+end note
+
+note left of canary
+  **Canary deployment:**
+  • 5% initial traffic
+  • Monitor metrics
+  • Gradual increase
+  • Auto-rollback
+end note
+
+note right of health
+  **Health checks:**
+  • Model loading
+  • API availability
+  • Response time
+  • Error rates
+end note
+
+@enduml

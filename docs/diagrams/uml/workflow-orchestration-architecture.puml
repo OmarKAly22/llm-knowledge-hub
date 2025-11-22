@@ -1,0 +1,109 @@
+@startuml Workflow Orchestration Architecture
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+title <size:16>AI Workflow Orchestration System</size>\n<size:11>Enterprise-Scale Pipeline Management</size>
+' Define actors
+actor "Developer" as dev #6b7280
+actor "Business User" as user #0284c7
+' Workflow Definition Layer
+package "Workflow Definition" #e0f2fe {
+    component "**Workflow Designer**\n<<Visual/Code>>" as designer #3b82f6
+    component "DAG Builder" as dag #2563eb
+    component "Validator" as validator #1e40af
+}
+' Orchestration Core
+package "Orchestration Engine" #dcfce7 {
+    component "**Scheduler**\n<<Cron/Event>>" as scheduler #22c55e
+    component "Task Queue" as queue #16a34a
+    component "Executor Pool" as executors #14532d
+    
+    frame "Execution Strategies" #ecfccb {
+        component "Sequential" as seq #84cc16
+        component "Parallel" as parallel #84cc16
+        component "Conditional" as cond #84cc16
+        component "Loop" as loop #84cc16
+    }
+}
+' State Management
+package "State & Monitoring" #fef3c7 {
+    database "State Store\n(Redis)" as state #f59e0b
+    component "Event Bus" as events #eab308
+    component "Metrics Collector" as metrics #ca8a04
+}
+' Worker Layer
+package "Worker Pool" #fce7f3 {
+    collections "Agent Workers" as agents #ec4899
+    collections "Tool Workers" as tools #db2777
+    collections "LLM Workers" as llms #be185d
+}
+' Integration Layer
+package "External Systems" #f3f4f6 {
+    cloud "Data Sources" as data #9ca3af
+    database "Results Store" as results #6b7280
+    component "Notification\nService" as notify #4b5563
+}
+' Workflow definition flow
+dev --> designer : "Define workflow"
+designer --> dag : "Build DAG"
+dag --> validator : "Validate"
+validator --> scheduler : "Deploy"
+' User interaction
+user --> scheduler : "Trigger workflow"
+' Execution flow
+scheduler --> queue : "Queue tasks"
+queue --> executors : "Distribute"
+executors --> seq : "Sequential tasks"
+executors --> parallel : "Parallel tasks"
+executors --> cond : "Conditional branches"
+executors --> loop : "Iterative tasks"
+' Worker execution
+executors --> agents : "Agent tasks"
+executors --> tools : "Tool tasks"
+executors --> llms : "LLM tasks"
+' State management
+executors <--> state : "Read/Write state"
+executors --> events : "Emit events"
+executors --> metrics : "Report metrics"
+' External interactions
+agents --> data : "Fetch data"
+agents --> results : "Store results"
+events --> notify : "Send notifications"
+' Monitoring flow
+metrics --> user : "Dashboard"
+' Annotations
+note right of designer
+  **Workflow Types:**
+  • Data pipelines
+  • ML training
+  • Content generation
+  • Business processes
+  • Report automation
+end note
+note bottom of executors
+  **Execution Features:**
+  • Retry logic
+  • Timeout handling
+  • Resource limits
+  • Priority queues
+  • Backpressure
+end note
+note left of state
+  **State Management:**
+  • Checkpointing
+  • Resume capability
+  • Rollback support
+  • Audit trails
+end note
+note right of agents
+  **Worker Types:**
+  • CPU workers
+  • GPU workers
+  • Memory-intensive
+  • I/O-intensive
+end note
+@enduml

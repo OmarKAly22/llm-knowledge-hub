@@ -1,0 +1,142 @@
+@startuml Performance Optimization Architecture
+!theme plain
+skinparam backgroundColor #f9fafb
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundcorner 15
+skinparam ArrowColor #2563eb
+skinparam ArrowThickness 2
+
+title <size:16>AI Performance Optimization Architecture</size>\n<size:11>Multi-Layer Optimization Strategy</size>
+
+' Define actors
+actor "User" as user #0284c7
+actor "Developer" as dev #6b7280
+
+' Request Layer
+package "Request Optimization" #e0f2fe {
+    component "**Load Balancer**\n<<Distribution>>" as lb #3b82f6
+    component "Request Router\n<<Smart Routing>>" as router #2563eb
+    component "Rate Limiter\n<<Throttling>>" as limiter #1e40af
+}
+
+' Caching Layer
+package "Caching Strategy" #dcfce7 {
+    component "**Cache Manager**\n<<Multi-Tier>>" as cache_mgr #22c55e
+    
+    frame "Cache Layers" #ecfccb {
+        database "L1: Memory\n<<μs latency>>" as l1_cache #84cc16
+        database "L2: Redis\n<<ms latency>>" as l2_cache #65a30d
+        database "L3: CDN\n<<global>>" as l3_cache #4d7c0f
+    }
+    
+    component "Cache Invalidator" as invalidator #365314
+}
+
+' Processing Optimization
+package "Processing Pipeline" #fef3c7 {
+    component "**Request Batcher**\n<<Aggregation>>" as batcher #f59e0b
+    component "Parallel Executor\n<<Concurrency>>" as parallel #eab308
+    component "Resource Pool\n<<Connection Pool>>" as pool #ca8a04
+    
+    frame "Optimization Techniques" #fef9c3 {
+        component "Prompt Compression" as compress #fbbf24
+        component "Token Optimizer" as token_opt #f97316
+        component "Model Selector" as model_sel #fb923c
+    }
+}
+
+' AI Services
+package "AI Services" #fce7f3 {
+    cloud "LLM Cluster\n<<GPT/Claude>>" as llm #ec4899
+    collections "Vector DBs\n<<Pinecone/Weaviate>>" as vectors #db2777
+    component "Edge Models\n<<Local/Fast>>" as edge #be185d
+}
+
+' Monitoring
+package "Performance Monitoring" #f3f4f6 {
+    component "Metrics Collector" as metrics #9ca3af
+    component "Performance Analyzer" as analyzer #6b7280
+    database "Time Series DB" as tsdb #4b5563
+}
+
+' Request flow
+user --> lb : Requests
+lb --> router : Route
+router --> limiter : Check limits
+
+' Cache flow
+limiter --> cache_mgr : Check cache
+cache_mgr --> l1_cache : Fast lookup
+l1_cache --> l2_cache : L1 miss
+l2_cache --> l3_cache : L2 miss
+
+' Cache miss flow
+cache_mgr --> batcher : Cache miss
+
+' Processing flow
+batcher --> parallel : Batched requests
+parallel --> pool : Get resources
+
+' Optimization flow
+parallel --> compress : Optimize prompt
+compress --> token_opt : Minimize tokens
+token_opt --> model_sel : Choose model
+
+' AI service calls
+model_sel --> llm : LLM calls
+model_sel --> vectors : Vector ops
+model_sel --> edge : Fast inference
+
+' Cache write-back
+llm --> cache_mgr : Store result
+vectors --> cache_mgr : Store result
+edge --> cache_mgr : Store result
+
+' Monitoring
+batcher --> metrics : Performance data
+parallel --> metrics : Concurrency metrics
+cache_mgr --> metrics : Hit rates
+metrics --> tsdb : Store
+tsdb --> analyzer : Analyze
+analyzer --> dev : Insights
+
+' Cache invalidation
+invalidator --> l1_cache : Purge
+invalidator --> l2_cache : Purge
+invalidator --> l3_cache : Purge
+
+' Annotations
+note right of lb
+  **Load balancing:**
+  • Round-robin
+  • Least connections
+  • Weighted
+  • Geographic
+end note
+
+note bottom of cache_mgr
+  **Cache strategies:**
+  • LRU eviction
+  • TTL-based
+  • Semantic similarity
+  • Cost-aware
+end note
+
+note left of batcher
+  **Batching benefits:**
+  • Reduced API calls
+  • Lower costs
+  • Better throughput
+  • Resource efficiency
+end note
+
+note right of model_sel
+  **Model selection:**
+  • Task complexity
+  • Latency requirements
+  • Cost constraints
+  • Accuracy needs
+end note
+
+@enduml

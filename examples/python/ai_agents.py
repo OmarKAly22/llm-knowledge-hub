@@ -764,7 +764,7 @@ class ReflectionEngine:
 
 class AIAgent:
     """
-    Complete AI Agent that combines all components.
+    AI Agent that combines all components.
     Capable of planning, execution, and self-improvement.
     """
 
@@ -808,7 +808,7 @@ class AIAgent:
             print(f"{step.step_id}. {step.description}{deps}")
 
         # Step 2: Execute plan
-        print("\n⚡ EXECUTION PHASE")
+        print("\nEXECUTION PHASE")
         print("-" * 40)
         execution_result = await self.executor.execute_plan(plan)
 
